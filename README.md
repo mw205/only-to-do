@@ -11,6 +11,7 @@ and don't forget to:
 * `flutter clean`
 * `flutter pub get`
 * `dart run build_runner build -d`
+* `fluttergen -c pubspec.yaml`
 
 ### colors
 
