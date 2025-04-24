@@ -13,6 +13,8 @@ class OnlyToDo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
+      minTextAdapt: true,
+      designSize: Size(393, 852),
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         routerConfig: AppRouter.router,
