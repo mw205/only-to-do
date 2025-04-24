@@ -6,22 +6,25 @@ import '../../features/splash/presentation/views/splash_view.dart';
 
 class AppRouter {
   AppRouter._();
-  static final router = GoRouter(routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => SplashView(),
-    ),
-    GoRoute(
-      path: HomeView.id,
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-          child: HomeView(),
-          transitionDuration: Duration(milliseconds: 1500),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(opacity: animation, child: child);
-          },
-        );
-      },
-    ),
-  ]);
+  static final router = GoRouter(
+    routes: [
+      GoRoute(
+        path: SplashView.id,
+        builder: (context, state) => SplashView(),
+      ),
+      GoRoute(
+        path: HomeView.id,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: HomeView(),
+            transitionDuration: Duration(milliseconds: 1500),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(opacity: animation, child: child);
+            },
+          );
+        },
+      ),
+    ],
+  );
 }
