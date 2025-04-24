@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:only_to_do/core/routes/app_router.dart';
 import 'package:only_to_do/gen/colors.gen.dart';
 
@@ -11,16 +12,19 @@ class OnlyToDo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: AppRouter.router,
-      title: 'Only To do',
-      theme: ThemeData(
-        scaffoldBackgroundColor: ColorName.white,
-        colorScheme: ColorScheme.light(
-          primary: ColorName.purple,
-          secondary: ColorName.lightPurple,
+    return ScreenUtilInit(
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        routerConfig: AppRouter.router,
+        title: 'Only To do',
+        theme: ThemeData(
+          scaffoldBackgroundColor: ColorName.white,
+          colorScheme: ColorScheme.light(
+            primary: ColorName.purple,
+            secondary: ColorName.lightPurple,
+          ),
+          useMaterial3: true,
         ),
-        useMaterial3: true,
       ),
     );
   }
