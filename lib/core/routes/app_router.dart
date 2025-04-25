@@ -35,8 +35,6 @@ class AppRouter {
       GoRoute(
         path: EditTaskView.id,
         builder: (context, state) => EditTaskView(),
-              GoRoute(
-        path: EditTaskView.id,
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             child: EditTaskView(),

@@ -7,7 +7,7 @@ class AppTextStyles {
     color: ColorName.black2,
     fontSize: 18.sp,
     fontWeight: FontWeight.w400, // Regular weight
-
+  );
   static TextStyle kPurple12W600 = TextStyle(
     fontSize: 12.sp,
     fontWeight: FontWeight.w600,
@@ -37,6 +37,5 @@ class AppTextStyles {
     fontSize: 16.sp,
     fontWeight: FontWeight.w600,
     color: ColorName.white,
-
   );
 }
