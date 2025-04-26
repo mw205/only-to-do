@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:only_to_do/gen/assets.gen.dart';
 
+import '../../features/pomodoro/presentation/views/pomodoro_view.dart';
 import '../../gen/colors.gen.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     super.key,
     required this.title,
+    required this.scaffoldKey,
   });
 
   final String title;
+  final GlobalKey<ScaffoldState> scaffoldKey;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      //sami
       height: 140,
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       decoration: const BoxDecoration(
@@ -35,7 +39,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   BlendMode.srcIn,
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                scaffoldKey.currentState?.openDrawer();
+              },
             ),
             Text(
               title,
@@ -45,18 +51,31 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 color: Colors.black87,
               ),
             ),
-            IconButton(
-              padding: EdgeInsets.zero,
-              icon: Assets.images.calendar.svg(
-                width: 24,
-                height: 24,
-                colorFilter: const ColorFilter.mode(
-                  Colors.black,
-                  BlendMode.srcIn,
+            Row(
+              children: [
+                IconButton(
+                  padding: EdgeInsets.zero,
+                  icon: Assets.images.calendar.svg(
+                    width: 24,
+                    height: 24,
+                    colorFilter: const ColorFilter.mode(
+                      Colors.black,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                  onPressed: () {},
                 ),
-              ),
-              onPressed: () {},
-            ),
+                IconButton(
+                  iconSize: 24.sp,
+                  onPressed: () {
+                    context.push(PomodoroView.id);
+                  },
+                  icon: Icon(
+                    Icons.timer_outlined,
+                  ),
+                )
+              ],
+            )
           ],
         ),
       ),

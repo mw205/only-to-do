@@ -4,7 +4,7 @@ import 'package:only_to_do/gen/colors.gen.dart';
 
 class AppTextStyles {
   static TextStyle font18Black1Medium = TextStyle(
-    color: ColorName.black2,
+    color: Colors.black,
     fontSize: 18.sp,
     fontWeight: FontWeight.w400, // Regular weight
   );
