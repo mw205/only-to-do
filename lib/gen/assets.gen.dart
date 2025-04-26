@@ -30,6 +30,18 @@ class $AssetsImagesGen {
   /// File path: assets/images/menu.svg
   SvgGenImage get menu => const SvgGenImage('assets/images/menu.svg');
 
+  /// File path: assets/images/onboarding1.svg
+  SvgGenImage get onboarding1 =>
+      const SvgGenImage('assets/images/onboarding1.svg');
+
+  /// File path: assets/images/onboarding2.svg
+  SvgGenImage get onboarding2 =>
+      const SvgGenImage('assets/images/onboarding2.svg');
+
+  /// File path: assets/images/onboarding3.svg
+  SvgGenImage get onboarding3 =>
+      const SvgGenImage('assets/images/onboarding3.svg');
+
   /// File path: assets/images/pomodoro.png
   AssetGenImage get pomodoro =>
       const AssetGenImage('assets/images/pomodoro.png');
@@ -57,6 +69,9 @@ class $AssetsImagesGen {
         location,
         logo,
         menu,
+        onboarding1,
+        onboarding2,
+        onboarding3,
         pomodoro,
         settings,
         skipFilled,
