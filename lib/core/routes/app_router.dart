@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import 'package:only_to_do/features/edit_task/presentation/views/edit_task_view.dart';
-
 import 'package:only_to_do/features/pomodoro/presentation/views/pomodoro_view.dart';
-
 
 import '../../features/home/presentation/views/home_view.dart';
 import '../../features/splash/presentation/views/splash_view.dart';
@@ -12,7 +9,6 @@ import '../../features/splash/presentation/views/splash_view.dart';
 class AppRouter {
   AppRouter._();
   static final router = GoRouter(
-    initialLocation: EditTaskView.id,
     routes: [
       GoRoute(
         path: SplashView.id,
@@ -31,7 +27,6 @@ class AppRouter {
           );
         },
       ),
-
       GoRoute(
         path: EditTaskView.id,
         builder: (context, state) => EditTaskView(),

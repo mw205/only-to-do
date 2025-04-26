@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:only_to_do/gen/colors.gen.dart';
 
+import '../../../../edit_task/presentation/views/edit_task_view.dart';
 import 'tasks.dart';
 
 class HomeViewBody extends StatelessWidget {
@@ -53,6 +55,9 @@ class TaskItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () {
+        context.push(EditTaskView.id);
+      },
       contentPadding: EdgeInsets.zero,
       leading: Icon(
         task.completed ? Icons.check_circle : Icons.radio_button_unchecked,
