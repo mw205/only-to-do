@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:only_to_do/features/edit_task/presentation/views/edit_task_view.dart';
-import 'package:only_to_do/features/pomodoro/presentation/views/pomodoro_view.dart';
-
+import 'package:only_to_do/features/informations/presentation/informations_view.dart';
 import '../../features/home/presentation/views/home_view.dart';
 import '../../features/splash/presentation/views/splash_view.dart';
 
@@ -27,32 +26,15 @@ class AppRouter {
           );
         },
       ),
+      //=====================//
       GoRoute(
         path: EditTaskView.id,
         builder: (context, state) => EditTaskView(),
-        pageBuilder: (context, state) {
-          return CustomTransitionPage(
-            child: EditTaskView(),
-            transitionDuration: Duration(milliseconds: 1500),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
-              return FadeTransition(opacity: animation, child: child);
-            },
-          );
-        },
       ),
+      //=====================//
       GoRoute(
-        path: PomodoroView.id,
-        pageBuilder: (context, state) {
-          return CustomTransitionPage(
-            child: PomodoroView(),
-            transitionDuration: Duration(milliseconds: 1500),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
-              return FadeTransition(opacity: animation, child: child);
-            },
-          );
-        },
+        path: SleepQuestionsFlow.id,
+        builder: (context, state) => SleepQuestionsFlow(),
       ),
     ],
   );
