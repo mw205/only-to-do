@@ -15,6 +15,20 @@ import 'package:vector_graphics/vector_graphics.dart' as _vg;
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/Satisfied.svg
+  SvgGenImage get satisfied => const SvgGenImage('assets/images/Satisfied.svg');
+
+  /// File path: assets/images/Sleeping-Emoji.svg
+  SvgGenImage get sleepingEmoji =>
+      const SvgGenImage('assets/images/Sleeping-Emoji.svg');
+
+  /// File path: assets/images/Sleeping-Face-Emoji.svg
+  SvgGenImage get sleepingFaceEmoji =>
+      const SvgGenImage('assets/images/Sleeping-Face-Emoji.svg');
+
+  /// File path: assets/images/bed.svg
+  SvgGenImage get bed => const SvgGenImage('assets/images/bed.svg');
+
   /// File path: assets/images/calendar.svg
   SvgGenImage get calendar => const SvgGenImage('assets/images/calendar.svg');
 
@@ -46,6 +60,9 @@ class $AssetsImagesGen {
   AssetGenImage get pomodoro =>
       const AssetGenImage('assets/images/pomodoro.png');
 
+  /// File path: assets/images/removebg.svg
+  SvgGenImage get removebg => const SvgGenImage('assets/images/removebg.svg');
+
   /// File path: assets/images/settings.svg
   SvgGenImage get settings => const SvgGenImage('assets/images/settings.svg');
 
@@ -62,8 +79,16 @@ class $AssetsImagesGen {
   /// File path: assets/images/th-list.svg
   SvgGenImage get thList => const SvgGenImage('assets/images/th-list.svg');
 
+  /// File path: assets/images/yawning emoji.svg
+  SvgGenImage get yawningEmoji =>
+      const SvgGenImage('assets/images/yawning-emoji.svg');
+
   /// List of all assets
   List<dynamic> get values => [
+        satisfied,
+        sleepingEmoji,
+        sleepingFaceEmoji,
+        bed,
         calendar,
         clock,
         location,
@@ -73,26 +98,24 @@ class $AssetsImagesGen {
         onboarding2,
         onboarding3,
         pomodoro,
+        removebg,
         settings,
         skipFilled,
         sun,
         tag,
-        thList
+        thList,
+        yawningEmoji,
       ];
 }
 
 class Assets {
-  Assets._();
+  const Assets._();
 
   static const $AssetsImagesGen images = $AssetsImagesGen();
 }
 
 class AssetGenImage {
-  const AssetGenImage(
-    this._assetName, {
-    this.size,
-    this.flavors = const {},
-  });
+  const AssetGenImage(this._assetName, {this.size, this.flavors = const {}});
 
   final String _assetName;
 
@@ -120,7 +143,7 @@ class AssetGenImage {
     bool gaplessPlayback = true,
     bool isAntiAlias = false,
     String? package,
-    FilterQuality filterQuality = FilterQuality.low,
+    FilterQuality filterQuality = FilterQuality.medium,
     int? cacheWidth,
     int? cacheHeight,
   }) {
@@ -152,15 +175,8 @@ class AssetGenImage {
     );
   }
 
-  ImageProvider provider({
-    AssetBundle? bundle,
-    String? package,
-  }) {
-    return AssetImage(
-      _assetName,
-      bundle: bundle,
-      package: package,
-    );
+  ImageProvider provider({AssetBundle? bundle, String? package}) {
+    return AssetImage(_assetName, bundle: bundle, package: package);
   }
 
   String get path => _assetName;
@@ -169,17 +185,11 @@ class AssetGenImage {
 }
 
 class SvgGenImage {
-  const SvgGenImage(
-    this._assetName, {
-    this.size,
-    this.flavors = const {},
-  }) : _isVecFormat = false;
+  const SvgGenImage(this._assetName, {this.size, this.flavors = const {}})
+      : _isVecFormat = false;
 
-  const SvgGenImage.vec(
-    this._assetName, {
-    this.size,
-    this.flavors = const {},
-  }) : _isVecFormat = true;
+  const SvgGenImage.vec(this._assetName, {this.size, this.flavors = const {}})
+      : _isVecFormat = true;
 
   final String _assetName;
   final Size? size;
