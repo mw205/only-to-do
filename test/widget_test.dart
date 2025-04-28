@@ -12,7 +12,9 @@ import 'package:only_to_do/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const OnlyToDo());
+    await tester.pumpWidget(const OnlyToDo(
+      isOriginalLayout: true,
+    ));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

@@ -8,7 +8,7 @@ import '../../cubits/events/events_cubit.dart';
 
 class AddEditEventPage extends StatefulWidget {
   final EventModel? event;
-  static const String id = 'add_edit_event';
+  static const String id = 'add-edit-event-page';
 
   const AddEditEventPage({super.key, this.event});
 

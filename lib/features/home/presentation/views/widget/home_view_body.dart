@@ -48,7 +48,7 @@ class SectionTitle extends StatelessWidget {
 class TaskItem extends StatelessWidget {
   final Task task;
 
-  const TaskItem({required this.task});
+  const TaskItem({super.key, required this.task});
 
   @override
   Widget build(BuildContext context) {

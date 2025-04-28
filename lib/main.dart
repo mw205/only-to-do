@@ -2,10 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:only_to_do/core/routes/app_router.dart';
-import 'package:only_to_do/gen/colors.gen.dart';
-
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'core/routes/app_router.dart';
 import 'features/yourevent/data/repositories/auth_repository.dart';
 import 'features/yourevent/data/repositories/dashboard_repository.dart';
 import 'features/yourevent/data/repositories/event_repository.dart';
@@ -14,28 +13,73 @@ import 'features/yourevent/presentation/cubits/dashboard/dashboard_cubit.dart';
 import 'features/yourevent/presentation/cubits/events/events_cubit.dart';
 import 'features/yourevent/presentation/cubits/pomodoro/pomodoro_cubit.dart';
 import 'features/yourevent/services/notification_service.dart';
+import 'gen/colors.gen.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize Firebase
   await Firebase.initializeApp();
 
-  // Initialize Hive for local storage
+  // Initialize Hive for local storage (needed for Event Countdown app)
   await Hive.initFlutter();
 
   // Initialize notification services
   await NotificationService().init();
-  runApp(const OnlyToDo());
+
+  // Check which app layout to use by default
+  final prefs = await SharedPreferences.getInstance();
+  final isOriginalLayout = prefs.getBool('is_original_layout') ?? true;
+
+  runApp(OnlyToDo(isOriginalLayout: isOriginalLayout));
 }
 
-class OnlyToDo extends StatelessWidget {
-  const OnlyToDo({super.key});
+class OnlyToDo extends StatefulWidget {
+  final bool isOriginalLayout;
+
+  const OnlyToDo({super.key, required this.isOriginalLayout});
+
+  @override
+  State<OnlyToDo> createState() => _OnlyToDoState();
+}
+
+class _OnlyToDoState extends State<OnlyToDo> {
+  late bool _isOriginalLayout;
+
+  @override
+  void initState() {
+    super.initState();
+    _isOriginalLayout = widget.isOriginalLayout;
+
+    // Listen for layout changes
+    _listenForLayoutChanges();
+  }
+
+  // Set up a listener for layout changes
+  void _listenForLayoutChanges() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    ValueNotifier<bool> layoutNotifier = ValueNotifier(_isOriginalLayout);
+    layoutNotifier.addListener(() {
+      final newLayout = layoutNotifier.value;
+      if (newLayout != _isOriginalLayout) {
+        setState(() {
+          _isOriginalLayout = newLayout;
+        });
+      }
+    });
+
+    // Simulate listening for changes in SharedPreferences
+    Future.delayed(Duration.zero, () async {
+      final newLayout = prefs.getBool('is_original_layout') ?? true;
+      layoutNotifier.value = newLayout;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        // Common providers for both layouts
         BlocProvider(
           create: (context) =>
               AuthCubit(authRepository: AuthRepository())..checkAuth(),
@@ -43,13 +87,22 @@ class OnlyToDo extends StatelessWidget {
         BlocProvider(
           create: (context) => EventsCubit(eventRepository: EventRepository()),
         ),
-        BlocProvider(create: (context) => PomodoroCubit()),
-        BlocProvider(
-          create: (context) => DashboardCubit(
-            dashboardRepository: DashboardRepository(),
-            eventRepository: EventRepository(),
+
+        // Original layout providers (conditionally included)
+        if (_isOriginalLayout) ...[
+          BlocProvider(create: (context) => PomodoroCubit()),
+          BlocProvider(
+            create: (context) => DashboardCubit(
+              dashboardRepository: DashboardRepository(),
+              eventRepository: EventRepository(),
+            ),
           ),
-        ),
+        ],
+
+        // New layout providers can be added here
+        // if (!_isOriginalLayout) ...[
+        //   Add any Task layout specific providers here
+        // ],
       ],
       child: ScreenUtilInit(
         minTextAdapt: true,
@@ -57,7 +110,7 @@ class OnlyToDo extends StatelessWidget {
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,
           routerConfig: AppRouter.router,
-          title: 'Only To do',
+          title: _isOriginalLayout ? 'Event Countdown' : 'Task Manager',
           theme: ThemeData(
             scaffoldBackgroundColor: ColorName.white,
             colorScheme: ColorScheme.light(

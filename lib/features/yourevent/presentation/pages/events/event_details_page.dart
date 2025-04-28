@@ -12,7 +12,7 @@ import 'add_edit_event_page.dart';
 
 class EventDetailsPage extends StatelessWidget {
   final EventModel event;
-  static const String id = 'event_details';
+  static const String id = 'event-details-page';
 
   const EventDetailsPage({super.key, required this.event});
 

@@ -11,18 +11,8 @@ class PomodoroPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pomodoro Timer'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () => _navigateToSettings(context),
-          ),
-        ],
-      ),
       body: BlocBuilder<PomodoroCubit, PomodoroState>(
         builder: (context, state) {
-          // Calculate percentage for the circular indicator
           final totalSeconds =
               state.isBreak
                   ? _getBreakDuration(state) * 60
@@ -37,27 +27,30 @@ class PomodoroPage extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Session type indicator
-                      Text(
-                        state.isBreak
-                            ? (state.completedSessions % state.longBreakAfter ==
-                                        0 &&
-                                    state.completedSessions > 0)
-                                ? 'Long Break'
-                                : 'Short Break'
-                            : 'Focus Time',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color:
-                              state.isBreak
-                                  ? Colors.green
-                                  : Theme.of(context).colorScheme.primary,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            state.isBreak
+                                ? (state.completedSessions %
+                                                state.longBreakAfter ==
+                                            0 &&
+                                        state.completedSessions > 0)
+                                    ? 'Long Break'
+                                    : 'Short Break'
+                                : 'Focus Time',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color:
+                                  state.isBreak
+                                      ? Colors.green
+                                      : Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 24),
-
-                      // Circular progress indicator with timer
                       CircularPercentIndicator(
                         radius: 130,
                         lineWidth: 15,
@@ -65,6 +58,7 @@ class PomodoroPage extends StatelessWidget {
                         center: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            SizedBox(height: 20),
                             Text(
                               _formatTime(state.remainingSeconds),
                               style: const TextStyle(
@@ -79,6 +73,13 @@ class PomodoroPage extends StatelessWidget {
                                 color: Colors.grey[600],
                               ),
                             ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.settings,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                              onPressed: () => navigateToSettings(context),
+                            ),
                           ],
                         ),
                         progressColor:
@@ -91,11 +92,9 @@ class PomodoroPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 40),
 
-                      // Timer controls
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          // Reset button
                           IconButton(
                             icon: const Icon(Icons.refresh),
                             iconSize: 32,
@@ -104,7 +103,6 @@ class PomodoroPage extends StatelessWidget {
                           ),
                           const SizedBox(width: 24),
 
-                          // Play/Pause button
                           FloatingActionButton(
                             onPressed: () {
                               if (state.status == PomodoroStatus.running) {
@@ -122,7 +120,6 @@ class PomodoroPage extends StatelessWidget {
                           ),
                           const SizedBox(width: 24),
 
-                          // Skip button
                           IconButton(
                             icon: const Icon(Icons.skip_next),
                             iconSize: 32,
@@ -209,7 +206,7 @@ class PomodoroPage extends StatelessWidget {
   }
 
   // Navigate to settings page
-  void _navigateToSettings(BuildContext context) async {
+  void navigateToSettings(BuildContext context) async {
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const PomodoroSettingsPage()),

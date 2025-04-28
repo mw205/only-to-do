@@ -9,7 +9,9 @@ import 'event_details_page.dart';
 
 class EventsListPage extends StatefulWidget {
   const EventsListPage({super.key});
-  static const String id = 'events_list';
+
+  static const String id = 'events-list-page';
+
   @override
   State<EventsListPage> createState() => _EventsListPageState();
 }
@@ -59,83 +61,95 @@ class _EventsListPageState extends State<EventsListPage>
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Your Events'),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: const [Tab(text: 'Upcoming'), Tab(text: 'All Events')],
-        ),
-      ),
-      body: BlocConsumer<EventsCubit, EventsState>(
-        listener: (context, state) {
-          if (state.status == EventsStatus.failure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.errorMessage ?? 'An error occurred'),
-              ),
-            );
-          }
-        },
-        builder: (context, state) {
-          if (state.status == EventsStatus.initial) {
-            return const Center(child: Text('No events yet'));
-          }
+      body: Column(
+        children: [
+          const SizedBox(height: 16),
+          Material(
+            child: TabBar(
+              controller: _tabController,
+              indicatorColor: Colors.black,
+              tabs: const [Tab(text: 'Upcoming'), Tab(text: 'All Events')],
+            ),
+          ),
+          Expanded(
+            child: BlocConsumer<EventsCubit, EventsState>(
+              listener: (context, state) {
+                if (state.status == EventsStatus.failure) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(state.errorMessage ?? 'An error occurred'),
+                    ),
+                  );
+                }
+              },
+              builder: (context, state) {
+                if (state.status == EventsStatus.initial) {
+                  return const Center(child: Text('No events yet'));
+                }
 
-          if (state.status == EventsStatus.loading && state.events.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
-          }
+                if (state.status == EventsStatus.loading &&
+                    state.events.isEmpty) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-          if (state.events.isEmpty) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.event_busy, size: 80, color: Colors.grey[400]),
-                  const SizedBox(height: 16),
-                  Text(
-                    _showUpcomingOnly
-                        ? 'No upcoming events'
-                        : 'No events found',
-                    style: const TextStyle(fontSize: 18, color: Colors.grey),
+                if (state.events.isEmpty) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.event_busy,
+                          size: 80,
+                          color: Colors.grey[400],
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          _showUpcomingOnly
+                              ? 'No upcoming events'
+                              : 'No events found',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        ElevatedButton(
+                          onPressed: () => _navigateToAddEvent(context),
+                          child: const Text('Add New Event'),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                return RefreshIndicator(
+                  onRefresh: () async => _loadEvents(),
+                  child: ListView.builder(
+                    itemCount: state.events.length,
+                    padding: const EdgeInsets.only(top: 8, bottom: 80),
+                    itemBuilder: (context, index) {
+                      final event = state.events[index];
+                      return EventCard(
+                        event: event,
+                        onTap: () => _navigateToEventDetails(context, event),
+                        onDelete: () => _showDeleteConfirmation(context, event),
+                        onCompleted: (isCompleted) {
+                          context.read<EventsCubit>().markEventAsCompleted(
+                                event.id,
+                                isCompleted,
+                              );
+                        },
+                      );
+                    },
                   ),
-                  const SizedBox(height: 24),
-                  ElevatedButton(
-                    onPressed: () => _navigateToAddEvent(context),
-                    child: const Text('Add New Event'),
-                  ),
-                ],
-              ),
-            );
-          }
-
-          return RefreshIndicator(
-            onRefresh: () async => _loadEvents(),
-            child: ListView.builder(
-              itemCount: state.events.length,
-              padding: const EdgeInsets.only(top: 8, bottom: 80),
-              itemBuilder: (context, index) {
-                final event = state.events[index];
-                return EventCard(
-                  event: event,
-                  onTap: () => _navigateToEventDetails(context, event),
-                  onDelete: () => _showDeleteConfirmation(context, event),
-                  onCompleted: (isCompleted) {
-                    context.read<EventsCubit>().markEventAsCompleted(
-                          event.id,
-                          isCompleted,
-                        );
-                  },
                 );
               },
             ),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _navigateToAddEvent(context),
-        child: const Icon(Icons.add),
+          ),
+        ],
       ),
     );
   }
