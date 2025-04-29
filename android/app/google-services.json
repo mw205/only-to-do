@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "866528238638",
+    "project_id": "event-countdown-8368f",
+    "storage_bucket": "event-countdown-8368f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:866528238638:android:7bbc3d676e3fdbcdf6d3bf",
+        "android_client_info": {
+          "package_name": "com.example.only_to_do"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAitQUOu_7Jvp9ZFrOU_h6zfJ5JhSNJhKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:866528238638:android:128dc02ffb8b785bf6d3bf",
+        "android_client_info": {
+          "package_name": "com.example.to_do"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAitQUOu_7Jvp9ZFrOU_h6zfJ5JhSNJhKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

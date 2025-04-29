@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:only_to_do/core/widgets/custom_app_bar.dart';
+
+import 'package:only_to_do/features/edit_task/presentation/views/widget/priority_selector.dart';
+import 'package:only_to_do/features/edit_task/presentation/views/widget/bottom_action_bar.dart';
+import 'package:only_to_do/features/edit_task/presentation/views/widget/descriotion_field.dart';
+import 'package:only_to_do/features/edit_task/presentation/views/widget/info_details.dart';
+
 import 'package:only_to_do/features/edit_task/presentation/views/widget/Info_details.dart';
 import 'package:only_to_do/features/edit_task/presentation/views/widget/Priority_selector.dart';
 import 'package:only_to_do/features/edit_task/presentation/views/widget/bottom_action_bar.dart';
 import 'package:only_to_do/features/edit_task/presentation/views/widget/descriotion_field.dart';
+
 import 'package:only_to_do/features/edit_task/presentation/views/widget/repeat_every_widget.dart';
 
 import '../../../../../core/widgets/drawer_body.dart';
@@ -33,7 +40,7 @@ class _EditTaskViewBodyState extends State<EditTaskViewBody> {
             width: 331.sp,
             hintText: 'Add description..',
           ),
-          PrioritySelector(),
+          // PrioritySelector(),
           SizedBox(
             height: 20.h,
           ),
@@ -41,7 +48,7 @@ class _EditTaskViewBodyState extends State<EditTaskViewBody> {
           SizedBox(
             height: 20.h,
           ),
-          InfoDetails(),
+          // InfoDetails(),
           CustomTextField(
               hintText: 'Add tags like exercise, work, etc.',
               height: 47.h,
