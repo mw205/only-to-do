@@ -59,27 +59,25 @@ class _TasksPageState extends State<TasksPage>
     final today = DateTime(now.year, now.month, now.day);
 
     setState(() {
-      _todayTasks =
-          allTasks.where((task) {
-            final taskDate = DateTime(
-              task.eventDate.year,
-              task.eventDate.month,
-              task.eventDate.day,
-            );
-            return taskDate.isAtSameMomentAs(today);
-          }).toList();
+      _todayTasks = allTasks.where((task) {
+        final taskDate = DateTime(
+          task.eventDate.year,
+          task.eventDate.month,
+          task.eventDate.day,
+        );
+        return taskDate.isAtSameMomentAs(today);
+      }).toList();
 
       _inboxTasks = allTasks;
 
-      _upcomingTasks =
-          allTasks.where((task) {
-            final taskDate = DateTime(
-              task.eventDate.year,
-              task.eventDate.month,
-              task.eventDate.day,
-            );
-            return taskDate.isAfter(today);
-          }).toList();
+      _upcomingTasks = allTasks.where((task) {
+        final taskDate = DateTime(
+          task.eventDate.year,
+          task.eventDate.month,
+          task.eventDate.day,
+        );
+        return taskDate.isAfter(today);
+      }).toList();
     });
   }
 
@@ -210,10 +208,9 @@ class _TasksPageState extends State<TasksPage>
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          decoration:
-                              task.isCompleted
-                                  ? TextDecoration.lineThrough
-                                  : null,
+                          decoration: task.isCompleted
+                              ? TextDecoration.lineThrough
+                              : null,
                           color: task.isCompleted ? Colors.grey : Colors.black,
                         ),
                       ),
@@ -237,9 +234,9 @@ class _TasksPageState extends State<TasksPage>
                   onChanged: (value) {
                     if (value != null) {
                       context.read<EventsCubit>().markEventAsCompleted(
-                        task.id,
-                        value,
-                      );
+                            task.id,
+                            value,
+                          );
                     }
                   },
                 ),

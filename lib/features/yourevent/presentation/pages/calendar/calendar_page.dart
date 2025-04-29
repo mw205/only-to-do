@@ -7,7 +7,7 @@ import '../../cubits/events/events_state.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({super.key});
-  static const String id = 'calendar-page';
+  static const String id = 'calendar_page';
   @override
   State<CalendarPage> createState() => _CalendarPageState();
 }

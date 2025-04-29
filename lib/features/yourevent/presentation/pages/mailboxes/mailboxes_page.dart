@@ -10,7 +10,8 @@ import '../tasks/task_detail_page.dart';
 
 class MailboxesPage extends StatefulWidget {
   const MailboxesPage({super.key});
-  static const String id = 'mailboxes-page';
+  static const String id = 'mailboxes_page';
+
   @override
   State<MailboxesPage> createState() => _MailboxesPageState();
 }

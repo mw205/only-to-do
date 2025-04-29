@@ -1,12 +1,17 @@
 // lib/presentation/pages/auth/login_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:only_to_do/features/yourevent/presentation/pages/home_page.dart';
+import '../../../../../gen/assets.gen.dart';
 import '../../cubits/auth/auth_cubit.dart';
 import '../../cubits/auth/auth_state.dart';
+import 'signup_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
-  static const String id = '/login';
+  static String id = "/login";
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -31,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state.status == AuthStatus.authenticated) {
-            Navigator.of(context).pushReplacementNamed('/home');
+            context.go(HomePage.id);
           } else if (state.status == AuthStatus.failure) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -49,20 +54,8 @@ class _LoginPageState extends State<LoginPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // App logo
-                  Container(
-                    height: 100,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    margin: const EdgeInsets.only(bottom: 40),
-                    child: const Icon(
-                      Icons.timer,
-                      size: 60,
-                      color: Colors.white,
-                    ),
-                  ),
+                  Assets.images.logo.svg(width: 150.w),
+                  const SizedBox(height: 32),
 
                   // Title
                   Text(
@@ -167,7 +160,8 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             TextButton(
                               onPressed: () {
-                                Navigator.of(context).pushNamed('/signup');
+                                // Use GoRouter instead of Navigator
+                                context.push(SignupPage.id);
                               },
                               child: const Text('Sign Up'),
                             ),

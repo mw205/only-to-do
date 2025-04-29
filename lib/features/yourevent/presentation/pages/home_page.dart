@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../cubits/auth/auth_cubit.dart';
 import '../cubits/auth/auth_state.dart';
 
 // Original pages
+import 'auth/login_page.dart';
 import 'dashboard/dashboard_page.dart';
 import 'events/add_edit_event_page.dart';
 import 'events/events_list_page.dart';
@@ -19,6 +21,7 @@ import 'tasks/tasks_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
+  static String id = "/main_home";
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -75,9 +78,7 @@ class _HomePageState extends State<HomePage> {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state.status == AuthStatus.unauthenticated) {
-          Navigator.of(
-            context,
-          ).pushNamedAndRemoveUntil('/login', (route) => false);
+          context.go(LoginPage.id);
         }
       },
       child: Scaffold(
@@ -113,43 +114,40 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         drawer: _buildDrawer(),
-        body:
-            _isOriginalLayout
-                ? _originalPages[_selectedIndex]
-                : _newPages[_selectedIndex],
-        bottomNavigationBar:
-            _isOriginalLayout
-                ? _buildOriginalBottomNav()
-                : _buildNewBottomNav(),
-        floatingActionButton:
-            _shouldShowFAB()
-                ? FloatingActionButton(
-                  onPressed: () {
-                    if (_isOriginalLayout) {
-                      if (_selectedIndex == 0) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const AddEditEventPage(),
-                          ),
-                        );
-                      }
-                    } else {
-                      if (_selectedIndex == 0) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const EditTaskPage(),
-                          ),
-                        );
-                      }
+        body: _isOriginalLayout
+            ? _originalPages[_selectedIndex]
+            : _newPages[_selectedIndex],
+        bottomNavigationBar: _isOriginalLayout
+            ? _buildOriginalBottomNav()
+            : _buildNewBottomNav(),
+        floatingActionButton: _shouldShowFAB()
+            ? FloatingActionButton(
+                onPressed: () {
+                  if (_isOriginalLayout) {
+                    if (_selectedIndex == 0) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AddEditEventPage(),
+                        ),
+                      );
                     }
-                  },
-                  tooltip:
-                      _isOriginalLayout ? 'إضافة حدث جديد' : 'إضافة مهمة جديدة',
-                  child: const Icon(Icons.add),
-                )
-                : null,
+                  } else {
+                    if (_selectedIndex == 0) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EditTaskPage(),
+                        ),
+                      );
+                    }
+                  }
+                },
+                tooltip:
+                    _isOriginalLayout ? 'إضافة حدث جديد' : 'إضافة مهمة جديدة',
+                child: const Icon(Icons.add),
+              )
+            : null,
       ),
     );
   }
@@ -379,27 +377,26 @@ class _HomePageState extends State<HomePage> {
   void _showLogoutConfirmation(BuildContext context) {
     showDialog(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: const Text('Logout'),
-            content: const Text('Are you sure you want to logout?'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  context.read<AuthCubit>().signOut();
-                },
-                child: const Text(
-                  'Logout',
-                  style: TextStyle(color: Colors.red),
-                ),
-              ),
-            ],
+      builder: (context) => AlertDialog(
+        title: const Text('Logout'),
+        content: const Text('Are you sure you want to logout?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
           ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              context.read<AuthCubit>().signOut();
+            },
+            child: const Text(
+              'Logout',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

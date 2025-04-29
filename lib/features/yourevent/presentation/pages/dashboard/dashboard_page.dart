@@ -10,7 +10,7 @@ import '../../widgets/charts/habit_tracker_chart.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
-  static const String id = '/dashboard';
+  static const String id = 'dashboard_page';
 
   @override
   State<DashboardPage> createState() => _DashboardPageState();

@@ -1,12 +1,9 @@
 // lib/services/notification_service.dart
 import 'dart:developer';
-
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz_data;
-import 'dart:io';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,8 +13,6 @@ class NotificationService {
   factory NotificationService() => _instance;
   NotificationService._internal();
 
-  final FlutterLocalNotificationsPlugin _localNotifications =
-      FlutterLocalNotificationsPlugin();
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   final _notificationStreamController =
       StreamController<Map<String, dynamic>>.broadcast();
@@ -34,8 +29,8 @@ class NotificationService {
     // Initialize Firebase Messaging
     await _initFirebaseMessaging();
 
-    // Initialize local notifications
-    await _initLocalNotifications();
+    // Initialize Awesome Notifications
+    await _initAwesomeNotifications();
 
     // Listen for notification tap events
     _setupNotificationTapAction();
@@ -108,119 +103,69 @@ class NotificationService {
     // Background notifications are handled by the system
   }
 
-  // Initialize local notifications
-  Future<void> _initLocalNotifications() async {
-    // Android initialization settings
-    const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
-
-    // iOS initialization settings
-    final DarwinInitializationSettings initializationSettingsIOS =
-        DarwinInitializationSettings(
-          requestSoundPermission: true,
-          requestBadgePermission: true,
-          requestAlertPermission: true,
-          // Removed onDidReceiveLocalNotification as it is no longer supported
-        );
-
-    // Initialize settings
-    final InitializationSettings initializationSettings =
-        InitializationSettings(
-          android: initializationSettingsAndroid,
-          iOS: initializationSettingsIOS,
-        );
-
-    // Initialize plugin
-    await _localNotifications.initialize(
-      initializationSettings,
-      onDidReceiveNotificationResponse: _onDidReceiveNotificationResponse,
+  // Initialize Awesome Notifications
+  Future<void> _initAwesomeNotifications() async {
+    await AwesomeNotifications().initialize(
+      // Set null to use the default app icon
+      'resource://drawable/ic_launcher',
+      [
+        // Events channel
+        NotificationChannel(
+          channelKey: 'events_channel',
+          channelName: 'Events Notifications',
+          channelDescription:
+              'This channel is used for event-related notifications',
+          defaultColor: Colors.purple,
+          ledColor: Colors.white,
+          importance: NotificationImportance.High,
+          playSound: true,
+          enableVibration: true,
+        ),
+        // Pomodoro channel
+        NotificationChannel(
+          channelKey: 'pomodoro_channel',
+          channelName: 'Pomodoro Notifications',
+          channelDescription:
+              'This channel is used for Pomodoro timer notifications',
+          defaultColor: Colors.red,
+          ledColor: Colors.white,
+          importance: NotificationImportance.High,
+          playSound: true,
+          enableVibration: true,
+        ),
+        // Daily reminder channel
+        NotificationChannel(
+          channelKey: 'reminder_channel',
+          channelName: 'Daily Reminders',
+          channelDescription:
+              'This channel is used for daily reminder notifications',
+          defaultColor: Colors.blue,
+          ledColor: Colors.white,
+          importance: NotificationImportance.Default,
+          playSound: true,
+          enableVibration: true,
+        ),
+      ],
     );
 
-    // Create notification channels for Android
-    if (Platform.isAndroid) {
-      await _createNotificationChannels();
-    }
-  }
-
-  // Create notification channels for Android
-  Future<void> _createNotificationChannels() async {
-    // Events channel
-    const AndroidNotificationChannel eventsChannel = AndroidNotificationChannel(
-      'events_channel',
-      'Events Notifications',
-      description: 'This channel is used for event-related notifications',
-      importance: Importance.high,
-      enableVibration: true,
-      enableLights: true,
-      playSound: true,
-    );
-
-    // Pomodoro channel
-    const AndroidNotificationChannel pomodoroChannel =
-        AndroidNotificationChannel(
-          'pomodoro_channel',
-          'Pomodoro Notifications',
-          description: 'This channel is used for Pomodoro timer notifications',
-          importance: Importance.high,
-          enableVibration: true,
-          enableLights: true,
-          playSound: true,
-        );
-
-    // Daily reminder channel
-    const AndroidNotificationChannel reminderChannel =
-        AndroidNotificationChannel(
-          'reminder_channel',
-          'Daily Reminders',
-          description: 'This channel is used for daily reminder notifications',
-          importance: Importance.defaultImportance,
-          enableVibration: true,
-          playSound: true,
-        );
-
-    // Create the channels
-    await _localNotifications
-        .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin
-        >()
-        ?.createNotificationChannel(eventsChannel);
-
-    await _localNotifications
-        .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin
-        >()
-        ?.createNotificationChannel(pomodoroChannel);
-
-    await _localNotifications
-        .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin
-        >()
-        ?.createNotificationChannel(reminderChannel);
-  }
-
-  // Handle iOS notification when app is in foreground (iOS < 10)
-  void onDidReceiveLocalNotification(
-    int id,
-    String? title,
-    String? body,
-    String? payload,
-  ) {
-    log('Received iOS notification in foreground: $title');
-    if (payload != null) {
-      _notificationStreamController.add({'payload': payload});
-    }
-  }
-
-  // Handle notification response (when user taps notification)
-  void _onDidReceiveNotificationResponse(NotificationResponse response) {
-    if (response.payload != null) {
-      log('Notification payload: ${response.payload}');
-      _notificationStreamController.add({'payload': response.payload});
-    }
+    // Request notification permissions
+    await AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
   }
 
   // Setup notification tap action to be detected in app
   void _setupNotificationTapAction() {
+    // Listen for notification tap events - use the correct API method
+    AwesomeNotifications().setListeners(
+      onActionReceivedMethod: _onActionReceivedMethod,
+      onNotificationCreatedMethod: _onNotificationCreatedMethod,
+      onNotificationDisplayedMethod: _onNotificationDisplayedMethod,
+      onDismissActionReceivedMethod: _onDismissActionReceivedMethod,
+    );
+
     // Check if app was opened from a notification
     FirebaseMessaging.instance.getInitialMessage().then((
       RemoteMessage? message,
@@ -244,6 +189,38 @@ class NotificationService {
     });
   }
 
+  // Awesome Notifications action handlers
+  @pragma("vm:entry-point")
+  static Future<void> _onActionReceivedMethod(
+      ReceivedAction receivedAction) async {
+    // Forward notification action to the singleton instance
+    if (receivedAction.payload != null) {
+      log('Notification action received: ${receivedAction.payload}');
+      NotificationService._instance._notificationStreamController.add({
+        'payload': receivedAction.payload.toString(),
+        'actionType': receivedAction.actionType.toString(),
+      });
+    }
+  }
+
+  @pragma("vm:entry-point")
+  static Future<void> _onNotificationCreatedMethod(
+      ReceivedNotification receivedNotification) async {
+    log('Notification created: ${receivedNotification.id}');
+  }
+
+  @pragma("vm:entry-point")
+  static Future<void> _onNotificationDisplayedMethod(
+      ReceivedNotification receivedNotification) async {
+    log('Notification displayed: ${receivedNotification.id}');
+  }
+
+  @pragma("vm:entry-point")
+  static Future<void> _onDismissActionReceivedMethod(
+      ReceivedAction receivedAction) async {
+    log('Notification dismissed: ${receivedAction.id}');
+  }
+
   // Show local notification immediately
   Future<void> showLocalNotification({
     required int id,
@@ -252,40 +229,19 @@ class NotificationService {
     String? payload,
     String channelId = 'events_channel',
   }) async {
-    const AndroidNotificationDetails androidDetails =
-        AndroidNotificationDetails(
-          'events_channel',
-          'Events Notifications',
-          channelDescription:
-              'This channel is used for event-related notifications',
-          importance: Importance.high,
-          priority: Priority.high,
-          enableVibration: true,
-          playSound: true,
-          icon: '@mipmap/ic_launcher',
-        );
-
-    const DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
-      presentAlert: true,
-      presentBadge: true,
-      presentSound: true,
-    );
-
-    const NotificationDetails platformDetails = NotificationDetails(
-      android: androidDetails,
-      iOS: iosDetails,
-    );
-
-    await _localNotifications.show(
-      id,
-      title,
-      body,
-      platformDetails,
-      payload: payload,
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: id,
+        channelKey: channelId,
+        title: title,
+        body: body,
+        payload: payload != null ? {'data': payload} : null,
+        notificationLayout: NotificationLayout.Default,
+      ),
     );
   }
 
-  // Schedule a local notification at a specific date/time
+  // Schedule a notification
   Future<void> scheduleEventNotification({
     required int id,
     required String title,
@@ -294,44 +250,16 @@ class NotificationService {
     String? payload,
     String channelId = 'events_channel',
   }) async {
-    final AndroidNotificationDetails androidDetails =
-        AndroidNotificationDetails(
-          channelId,
-          channelId == 'events_channel'
-              ? 'Events Notifications'
-              : 'Pomodoro Notifications',
-          channelDescription: 'This channel is used for notifications',
-          importance: Importance.high,
-          priority: Priority.high,
-          enableVibration: true,
-          playSound: true,
-          icon: '@mipmap/ic_launcher',
-        );
-
-    const DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
-      presentAlert: true,
-      presentBadge: true,
-      presentSound: true,
-    );
-
-    final NotificationDetails platformDetails = NotificationDetails(
-      android: androidDetails,
-      iOS: iosDetails,
-    );
-
-    // Convert to timezone-aware DateTime
-    final scheduledTzDate = tz.TZDateTime.from(scheduledDate, tz.local);
-
-    // Schedule notification
-    await _localNotifications.zonedSchedule(
-      id,
-      title,
-      body,
-      scheduledTzDate,
-      platformDetails,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-
-      payload: payload,
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: id,
+        channelKey: channelId,
+        title: title,
+        body: body,
+        payload: payload != null ? {'data': payload, 'eventId': payload} : null,
+        notificationLayout: NotificationLayout.Default,
+      ),
+      schedule: NotificationCalendar.fromDate(date: scheduledDate),
     );
   }
 
@@ -344,63 +272,27 @@ class NotificationService {
     String? payload,
     String channelId = 'reminder_channel',
   }) async {
-    final AndroidNotificationDetails androidDetails =
-        AndroidNotificationDetails(
-          channelId,
-          'Daily Reminders',
-          channelDescription:
-              'This channel is used for daily reminder notifications',
-          importance: Importance.defaultImportance,
-          priority: Priority.defaultPriority,
-          enableVibration: true,
-          playSound: true,
-          icon: '@mipmap/ic_launcher',
-        );
-
-    const DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
-      presentAlert: true,
-      presentBadge: true,
-      presentSound: true,
-    );
-
-    final NotificationDetails platformDetails = NotificationDetails(
-      android: androidDetails,
-      iOS: iosDetails,
-    );
-
-    // Create timezone-aware DateTime for today at the specified time
-    final now = DateTime.now();
-    final scheduledDate = DateTime(
-      now.year,
-      now.month,
-      now.day,
-      timeOfDay.hour,
-      timeOfDay.minute,
-    );
-
-    // If the time is in the past for today, schedule for tomorrow
-    tz.TZDateTime scheduledTzDate = tz.TZDateTime.from(scheduledDate, tz.local);
-    if (scheduledTzDate.isBefore(tz.TZDateTime.now(tz.local))) {
-      scheduledTzDate = scheduledTzDate.add(const Duration(days: 1));
-    }
-
-    // Schedule daily notification
-    await _localNotifications.zonedSchedule(
-      id,
-      title,
-      body,
-      scheduledTzDate,
-      platformDetails,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      matchDateTimeComponents: DateTimeComponents.time,
-
-      payload: payload,
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: id,
+        channelKey: channelId,
+        title: title,
+        body: body,
+        payload: payload != null ? {'data': payload} : null,
+        notificationLayout: NotificationLayout.Default,
+      ),
+      schedule: NotificationCalendar(
+        hour: timeOfDay.hour,
+        minute: timeOfDay.minute,
+        second: 0,
+        repeats: true,
+      ),
     );
   }
 
   // Cancel a specific notification
   Future<void> cancelNotification(int id) async {
-    await _localNotifications.cancel(id);
+    await AwesomeNotifications().cancel(id);
   }
 
   // Cancel all event notifications for a specific event
@@ -410,21 +302,22 @@ class NotificationService {
     final baseId = eventId.hashCode;
 
     // Cancel the main notification
-    await _localNotifications.cancel(baseId);
+    await AwesomeNotifications().cancel(baseId);
 
     // Cancel potential reminder notifications (we use a range of IDs)
     for (int i = 1; i <= 10; i++) {
-      await _localNotifications.cancel(baseId + i);
+      await AwesomeNotifications().cancel(baseId + i);
     }
   }
 
   // Cancel all notifications
   Future<void> cancelAllNotifications() async {
-    await _localNotifications.cancelAll();
+    await AwesomeNotifications().cancelAll();
   }
 
   // Dispose resources
   void dispose() {
+    // No need to manually close action streams anymore
     _notificationStreamController.close();
   }
 }

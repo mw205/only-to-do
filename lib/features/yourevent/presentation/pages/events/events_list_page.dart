@@ -9,8 +9,7 @@ import 'event_details_page.dart';
 
 class EventsListPage extends StatefulWidget {
   const EventsListPage({super.key});
-
-  static const String id = 'events-list-page';
+  static const String id = 'events_list_page';
 
   @override
   State<EventsListPage> createState() => _EventsListPageState();

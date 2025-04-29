@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:only_to_do/features/yourevent/presentation/pages/auth/login_page.dart';
 import '../cubits/auth/auth_cubit.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -47,15 +49,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
       title: titleWidget ?? Text(title),
-      leading:
-          showBackButton
-              ? leading ??
-                  IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed:
-                        onBackPressed ?? () => Navigator.of(context).pop(),
-                  )
-              : null,
+      leading: showBackButton
+          ? leading ??
+              IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: onBackPressed ?? () => Navigator.of(context).pop(),
+              )
+          : null,
       actions: combinedActions,
       elevation: elevation,
       backgroundColor: backgroundColor,
@@ -67,34 +67,38 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   void _showLogoutConfirmation(BuildContext context) {
     showDialog(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: const Text('Logout'),
-            content: const Text('Are you sure you want to logout?'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  context.read<AuthCubit>().signOut();
-                },
-                child: const Text(
-                  'Logout',
-                  style: TextStyle(color: Colors.red),
-                ),
-              ),
-            ],
+      builder: (context) => AlertDialog(
+        title: const Text('Logout'),
+        content: const Text('Are you sure you want to logout?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
           ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              context.read<AuthCubit>().signOut();
+              if (context.mounted) {
+                context.go(
+                  LoginPage.id,
+                );
+              }
+            },
+            child: const Text(
+              'Logout',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   @override
   Size get preferredSize => Size.fromHeight(
-    bottom == null
-        ? kToolbarHeight
-        : kToolbarHeight + bottom!.preferredSize.height,
-  );
+        bottom == null
+            ? kToolbarHeight
+            : kToolbarHeight + bottom!.preferredSize.height,
+      );
 }

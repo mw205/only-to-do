@@ -189,8 +189,7 @@ class PomodoroCubit extends Cubit<PomodoroState> {
 
   // Get current break duration
   int _getBreakDuration() {
-    final isLongBreak =
-        (state.completedSessions % state.longBreakAfter == 0) &&
+    final isLongBreak = (state.completedSessions % state.longBreakAfter == 0) &&
         state.completedSessions > 0;
 
     return isLongBreak ? state.longBreakDuration : state.shortBreakDuration;

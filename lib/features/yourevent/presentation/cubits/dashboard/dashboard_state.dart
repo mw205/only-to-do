@@ -72,11 +72,11 @@ class DashboardState extends Equatable {
 
   @override
   List<Object?> get props => [
-    todayTracker,
-    periodTrackers,
-    status,
-    period,
-    errorMessage,
-    isUpdating,
-  ];
+        todayTracker,
+        periodTrackers,
+        status,
+        period,
+        errorMessage,
+        isUpdating,
+      ];
 }

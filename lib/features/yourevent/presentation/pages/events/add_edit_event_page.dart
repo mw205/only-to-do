@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
+
 import '../../../data/models/event_model.dart';
 import '../../../services/firebase_service.dart';
 import '../../cubits/events/events_cubit.dart';
 
 class AddEditEventPage extends StatefulWidget {
   final EventModel? event;
-  static const String id = 'add-edit-event-page';
+  static const String id = 'add_edit_event_page';
 
   const AddEditEventPage({super.key, this.event});
 

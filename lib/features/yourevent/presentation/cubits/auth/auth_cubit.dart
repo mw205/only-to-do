@@ -8,8 +8,8 @@ class AuthCubit extends Cubit<AuthState> {
   StreamSubscription? _authStateSubscription;
 
   AuthCubit({required AuthRepository authRepository})
-    : _authRepository = authRepository,
-      super(AuthState.initial());
+      : _authRepository = authRepository,
+        super(AuthState.initial());
 
   // Check authentication status
   Future<void> checkAuth() async {

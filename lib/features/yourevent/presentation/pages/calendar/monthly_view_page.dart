@@ -12,6 +12,7 @@ import '../tasks/task_detail_page.dart';
 class MonthlyViewPage extends StatefulWidget {
   const MonthlyViewPage({super.key});
   static const String id = '/monthly-view';
+
   @override
   State<MonthlyViewPage> createState() => _MonthlyViewPageState();
 }

@@ -12,9 +12,9 @@ class DashboardCubit extends Cubit<DashboardState> {
   DashboardCubit({
     required DashboardRepository dashboardRepository,
     required EventRepository eventRepository,
-  }) : _dashboardRepository = dashboardRepository,
-       _eventRepository = eventRepository,
-       super(DashboardState.initial());
+  })  : _dashboardRepository = dashboardRepository,
+        _eventRepository = eventRepository,
+        super(DashboardState.initial());
 
   // Load dashboard data
   Future<void> loadDashboard() async {
@@ -275,15 +275,14 @@ class DashboardCubit extends Cubit<DashboardState> {
         DateTime.now().day,
       );
 
-      final todayEvents =
-          events.where((event) {
-            final eventDate = DateTime(
-              event.eventDate.year,
-              event.eventDate.month,
-              event.eventDate.day,
-            );
-            return eventDate.isAtSameMomentAs(today);
-          }).toList();
+      final todayEvents = events.where((event) {
+        final eventDate = DateTime(
+          event.eventDate.year,
+          event.eventDate.month,
+          event.eventDate.day,
+        );
+        return eventDate.isAtSameMomentAs(today);
+      }).toList();
 
       final completedEvents =
           todayEvents.where((event) => event.isCompleted).length;

@@ -13,8 +13,8 @@ class EventsCubit extends Cubit<EventsState> {
   StreamSubscription? _eventsSubscription;
 
   EventsCubit({required EventRepository eventRepository})
-    : _eventRepository = eventRepository,
-      super(EventsState.initial());
+      : _eventRepository = eventRepository,
+        super(EventsState.initial());
 
   // Load all events for current user
   void loadEvents() {

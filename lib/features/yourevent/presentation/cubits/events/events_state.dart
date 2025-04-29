@@ -63,11 +63,11 @@ class EventsState extends Equatable {
 
   @override
   List<Object?> get props => [
-    events,
-    status,
-    errorMessage,
-    isCreating,
-    isUpdating,
-    isDeleting,
-  ];
+        events,
+        status,
+        errorMessage,
+        isCreating,
+        isUpdating,
+        isDeleting,
+      ];
 }

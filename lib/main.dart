@@ -27,6 +27,9 @@ Future<void> main() async {
   // Initialize notification services
   await NotificationService().init();
 
+  // Note: We don't need to set up listeners here as they're already set up
+  // in the NotificationService class
+
   // Check which app layout to use by default
   final prefs = await SharedPreferences.getInstance();
   final isOriginalLayout = prefs.getBool('is_original_layout') ?? true;

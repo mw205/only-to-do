@@ -70,9 +70,9 @@ class TaskDetailPage extends StatelessWidget {
                   onChanged: (value) {
                     if (value != null) {
                       context.read<EventsCubit>().markEventAsCompleted(
-                        task.id,
-                        value,
-                      );
+                            task.id,
+                            value,
+                          );
                       Navigator.pop(context, true);
                     }
                   },
@@ -108,14 +108,11 @@ class TaskDetailPage extends StatelessWidget {
 
             if (task.description.isNotEmpty) ...[
               const Divider(height: 32),
-
               const Text(
                 'Description',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-
               const SizedBox(height: 12),
-
               Text(task.description, style: const TextStyle(fontSize: 16)),
             ],
 
@@ -214,27 +211,26 @@ class TaskDetailPage extends StatelessWidget {
   void _showDeleteConfirmation(BuildContext context) {
     showDialog(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: const Text('Delete Task'),
-            content: Text('Are you sure you want to delete "${task.title}"?'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context); // Close dialog
-                  _deleteTask(context);
-                },
-                child: const Text(
-                  'Delete',
-                  style: TextStyle(color: Colors.red),
-                ),
-              ),
-            ],
+      builder: (context) => AlertDialog(
+        title: const Text('Delete Task'),
+        content: Text('Are you sure you want to delete "${task.title}"?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
           ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // Close dialog
+              _deleteTask(context);
+            },
+            child: const Text(
+              'Delete',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

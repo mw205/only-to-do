@@ -11,7 +11,7 @@ import '../tasks/task_detail_page.dart';
 
 class WeeklyViewPage extends StatefulWidget {
   const WeeklyViewPage({super.key});
-  static const String id = '/weekly-view';
+  static const String id = 'weekly_view_page';
 
   @override
   State<WeeklyViewPage> createState() => _WeeklyViewPageState();

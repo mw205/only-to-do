@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
+
 import '../../../data/models/event_model.dart';
 import '../../../services/firebase_service.dart';
 import '../../cubits/events/events_cubit.dart';
@@ -129,27 +130,26 @@ class _EditTaskPageState extends State<EditTaskPage> {
       final taskDateTime = _getTaskDateTime();
       final priorityColor = _getPriorityColor(_priority);
 
-      final EventModel task =
-          widget.task != null
-              ? widget.task!.copyWith(
-                title: _titleController.text,
-                description: _descriptionController.text,
-                eventDate: taskDateTime,
-                color: priorityColor,
-                icon: 'event', // Default icon
-              )
-              : EventModel(
-                id: const Uuid().v4(),
-                title: _titleController.text,
-                description: _descriptionController.text,
-                eventDate: taskDateTime,
-                reminderTimes: [],
-                userId: userId,
-                color: priorityColor,
-                icon: 'event',
-                createdAt: DateTime.now(),
-                updatedAt: DateTime.now(),
-              );
+      final EventModel task = widget.task != null
+          ? widget.task!.copyWith(
+              title: _titleController.text,
+              description: _descriptionController.text,
+              eventDate: taskDateTime,
+              color: priorityColor,
+              icon: 'event', // Default icon
+            )
+          : EventModel(
+              id: const Uuid().v4(),
+              title: _titleController.text,
+              description: _descriptionController.text,
+              eventDate: taskDateTime,
+              reminderTimes: [],
+              userId: userId,
+              color: priorityColor,
+              icon: 'event',
+              createdAt: DateTime.now(),
+              updatedAt: DateTime.now(),
+            );
 
       if (widget.task != null) {
         await context.read<EventsCubit>().updateEvent(task);
@@ -231,44 +231,43 @@ class _EditTaskPageState extends State<EditTaskPage> {
                     });
                   }
                 },
-                items:
-                    <String>[
-                      'Low',
-                      'Medium',
-                      'High',
-                    ].map<DropdownMenuItem<String>>((String value) {
-                      Color color;
-                      switch (value) {
-                        case 'High':
-                          color = Colors.red;
-                          break;
-                        case 'Medium':
-                          color = Colors.orange;
-                          break;
-                        case 'Low':
-                          color = Colors.green;
-                          break;
-                        default:
-                          color = Colors.blue;
-                      }
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 12,
-                              height: 12,
-                              decoration: BoxDecoration(
-                                color: color,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Text(value),
-                          ],
+                items: <String>[
+                  'Low',
+                  'Medium',
+                  'High',
+                ].map<DropdownMenuItem<String>>((String value) {
+                  Color color;
+                  switch (value) {
+                    case 'High':
+                      color = Colors.red;
+                      break;
+                    case 'Medium':
+                      color = Colors.orange;
+                      break;
+                    case 'Low':
+                      color = Colors.green;
+                      break;
+                    default:
+                      color = Colors.blue;
+                  }
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 12,
+                          height: 12,
+                          decoration: BoxDecoration(
+                            color: color,
+                            shape: BoxShape.circle,
+                          ),
                         ),
-                      );
-                    }).toList(),
+                        const SizedBox(width: 8),
+                        Text(value),
+                      ],
+                    ),
+                  );
+                }).toList(),
               ),
             ),
 
