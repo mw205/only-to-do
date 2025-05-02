@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:only_to_do/core/styles/app_text_styles.dart';
 import 'package:only_to_do/gen/colors.gen.dart';
