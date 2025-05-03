@@ -93,7 +93,7 @@ class OnBoardingPage extends StatelessWidget {
   final String? buttonText;
   final VoidCallback? onPressed;
 
-  const OnBoardingPage({
+  const OnBoardingPage({super.key, 
     required this.imagePath,
     required this.title,
     required this.description,
@@ -129,19 +129,19 @@ class OnBoardingPage extends StatelessWidget {
             const SizedBox(height: 60),
             ElevatedButton(
               onPressed: onPressed,
-              child: Text(
-                buttonText ?? "Get Started",
-                style: TextStyle(
-                    color: ColorName.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18),
-              ),
               style: ElevatedButton.styleFrom(
                 iconSize: 24,
                 minimumSize: Size(220, 60),
                 backgroundColor: ColorName.purple,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+              ),
+              child: Text(
+                buttonText ?? "Get Started",
+                style: TextStyle(
+                    color: ColorName.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
               ),
             ),
           ],
@@ -167,6 +167,11 @@ class WelcomeScreen extends StatelessWidget {
               const SizedBox(height: 80),
               ElevatedButton(
                 onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ColorName.purple,
+                  iconSize: 24,
+                  minimumSize: Size(220, 60),
+                ),
                 child: Text(
                   'Register',
                   style: TextStyle(
@@ -174,26 +179,21 @@ class WelcomeScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       fontSize: 18),
                 ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: ColorName.purple,
                   iconSize: 24,
                   minimumSize: Size(220, 60),
                 ),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {},
                 child: Text(
                   'Anonymous',
                   style: TextStyle(
                       color: ColorName.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 18),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorName.purple,
-                  iconSize: 24,
-                  minimumSize: Size(220, 60),
                 ),
               ),
             ],
