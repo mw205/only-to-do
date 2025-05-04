@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:only_to_do/gen/assets.gen.dart';
 
-import '../../features/pomodoro/presentation/views/pomodoro_view.dart';
 import '../../gen/colors.gen.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -65,15 +62,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                   onPressed: () {},
                 ),
-                IconButton(
-                  iconSize: 24.sp,
-                  onPressed: () {
-                    context.push(PomodoroView.id);
-                  },
-                  icon: Icon(
-                    Icons.timer_outlined,
-                  ),
-                )
               ],
             )
           ],

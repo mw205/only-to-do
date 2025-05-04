@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../data/models/event_model.dart';
+import '../../../../../core/data/models/event_model.dart';
 import '../../../services/firebase_service.dart';
 import '../../cubits/events/events_cubit.dart';
 

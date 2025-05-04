@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import '../../../data/models/event_model.dart';
+import '../../../../../core/data/models/event_model.dart';
 import '../../cubits/events/events_cubit.dart';
 import '../../cubits/events/events_state.dart';
 import '../tasks/edit_task_page.dart';

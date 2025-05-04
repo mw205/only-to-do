@@ -5,17 +5,17 @@ import 'package:only_to_do/gen/colors.gen.dart';
 class QuestionText extends StatelessWidget {
   const QuestionText({
     super.key,
-    required this.questionData,
+    required this.question,
   });
 
-  final Map<String, dynamic> questionData;
+  final String question;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 24.h),
       child: Text(
-        questionData['question'],
+        question,
         textAlign: TextAlign.center,
         style: const TextStyle(
           color: ColorName.white,

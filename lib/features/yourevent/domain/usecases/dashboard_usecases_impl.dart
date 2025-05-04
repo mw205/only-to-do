@@ -1,5 +1,5 @@
-import '../../data/models/daily_tracker_model.dart';
-import '../../data/repositories/dashboard_repository.dart';
+import '../../../../core/data/models/daily_tracker_model.dart';
+import '../../../../core/data/repositories/dashboard_repository.dart';
 import '../entities/daily_tracker.dart';
 import 'dashboard_usecases.dart';
 

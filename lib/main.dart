@@ -4,16 +4,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'core/routes/app_router.dart';
-import 'features/yourevent/data/repositories/auth_repository.dart';
-import 'features/yourevent/data/repositories/dashboard_repository.dart';
-import 'features/yourevent/data/repositories/event_repository.dart';
-import 'features/yourevent/presentation/cubits/auth/auth_cubit.dart';
+import 'core/data/repositories/auth_repository.dart';
+import 'core/data/repositories/dashboard_repository.dart';
+import 'core/data/repositories/event_repository.dart';
+import 'features/auth/presentation/cubit/auth_cubit.dart';
 import 'features/yourevent/presentation/cubits/dashboard/dashboard_cubit.dart';
 import 'features/yourevent/presentation/cubits/events/events_cubit.dart';
-import 'features/yourevent/presentation/cubits/pomodoro/pomodoro_cubit.dart';
+import 'features/pomodoro/presentation/cubit/pomodoro_cubit.dart';
 import 'features/yourevent/services/notification_service.dart';
 import 'gen/colors.gen.dart';
+import 'gen/fonts.gen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +35,6 @@ Future<void> main() async {
   // Check which app layout to use by default
   final prefs = await SharedPreferences.getInstance();
   final isOriginalLayout = prefs.getBool('is_original_layout') ?? true;
-
   runApp(OnlyToDo(isOriginalLayout: isOriginalLayout));
 }
 
@@ -82,7 +83,6 @@ class _OnlyToDoState extends State<OnlyToDo> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        // Common providers for both layouts
         BlocProvider(
           create: (context) =>
               AuthCubit(authRepository: AuthRepository())..checkAuth(),
@@ -90,8 +90,6 @@ class _OnlyToDoState extends State<OnlyToDo> {
         BlocProvider(
           create: (context) => EventsCubit(eventRepository: EventRepository()),
         ),
-
-        // Original layout providers (conditionally included)
         if (_isOriginalLayout) ...[
           BlocProvider(create: (context) => PomodoroCubit()),
           BlocProvider(
@@ -101,11 +99,6 @@ class _OnlyToDoState extends State<OnlyToDo> {
             ),
           ),
         ],
-
-        // New layout providers can be added here
-        // if (!_isOriginalLayout) ...[
-        //   Add any Task layout specific providers here
-        // ],
       ],
       child: ScreenUtilInit(
         minTextAdapt: true,
@@ -120,6 +113,7 @@ class _OnlyToDoState extends State<OnlyToDo> {
               primary: ColorName.purple,
               secondary: ColorName.lightPurple,
             ),
+            fontFamily: FontFamily.dMSans,
             useMaterial3: true,
           ),
         ),

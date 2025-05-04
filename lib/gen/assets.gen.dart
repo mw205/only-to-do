@@ -15,25 +15,34 @@ import 'package:vector_graphics/vector_graphics.dart' as _vg;
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
-  /// File path: assets/images/Satisfied.svg
-  SvgGenImage get satisfied => const SvgGenImage('assets/images/Satisfied.svg');
+  /// File path: assets/images/a_little.png
+  AssetGenImage get aLittle =>
+      const AssetGenImage('assets/images/a_little.png');
 
-  /// File path: assets/images/Sleeping-Emoji.svg
-  SvgGenImage get sleepingEmoji =>
-      const SvgGenImage('assets/images/Sleeping-Emoji.svg');
-
-  /// File path: assets/images/Sleeping-Face-Emoji.svg
-  SvgGenImage get sleepingFaceEmoji =>
-      const SvgGenImage('assets/images/Sleeping-Face-Emoji.svg');
-
-  /// File path: assets/images/bed.svg
-  SvgGenImage get bed => const SvgGenImage('assets/images/bed.svg');
+  /// File path: assets/images/bed.png
+  AssetGenImage get bed => const AssetGenImage('assets/images/bed.png');
 
   /// File path: assets/images/calendar.svg
   SvgGenImage get calendar => const SvgGenImage('assets/images/calendar.svg');
 
   /// File path: assets/images/clock.svg
   SvgGenImage get clock => const SvgGenImage('assets/images/clock.svg');
+
+  /// File path: assets/images/clock_time.png
+  AssetGenImage get clockTime =>
+      const AssetGenImage('assets/images/clock_time.png');
+
+  /// File path: assets/images/every_once_a_while.png
+  AssetGenImage get everyOnceAWhile =>
+      const AssetGenImage('assets/images/every_once_a_while.png');
+
+  /// File path: assets/images/lack_of_sleep.png
+  AssetGenImage get lackOfSleep =>
+      const AssetGenImage('assets/images/lack_of_sleep.png');
+
+  /// File path: assets/images/light_pulb.png
+  AssetGenImage get lightPulb =>
+      const AssetGenImage('assets/images/light_pulb.png');
 
   /// File path: assets/images/location.svg
   SvgGenImage get location => const SvgGenImage('assets/images/location.svg');
@@ -43,6 +52,23 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/menu.svg
   SvgGenImage get menu => const SvgGenImage('assets/images/menu.svg');
+
+  /// File path: assets/images/moon.png
+  AssetGenImage get moon => const AssetGenImage('assets/images/moon.png');
+
+  /// File path: assets/images/most_nights.png
+  AssetGenImage get mostNights =>
+      const AssetGenImage('assets/images/most_nights.png');
+
+  /// File path: assets/images/neutral.png
+  AssetGenImage get neutral => const AssetGenImage('assets/images/neutral.png');
+
+  /// File path: assets/images/never.png
+  AssetGenImage get never => const AssetGenImage('assets/images/never.png');
+
+  /// File path: assets/images/not_at_all.png
+  AssetGenImage get notAtAll =>
+      const AssetGenImage('assets/images/not_at_all.png');
 
   /// File path: assets/images/onboarding1.svg
   SvgGenImage get onboarding1 =>
@@ -56,12 +82,20 @@ class $AssetsImagesGen {
   SvgGenImage get onboarding3 =>
       const SvgGenImage('assets/images/onboarding3.svg');
 
+  /// File path: assets/images/pizza.png
+  AssetGenImage get pizza => const AssetGenImage('assets/images/pizza.png');
+
   /// File path: assets/images/pomodoro.png
   AssetGenImage get pomodoro =>
       const AssetGenImage('assets/images/pomodoro.png');
 
-  /// File path: assets/images/removebg.svg
-  SvgGenImage get removebg => const SvgGenImage('assets/images/removebg.svg');
+  /// File path: assets/images/restricted.png
+  AssetGenImage get restricted =>
+      const AssetGenImage('assets/images/restricted.png');
+
+  /// File path: assets/images/satisfied_sleeping.png
+  AssetGenImage get satisfiedSleeping =>
+      const AssetGenImage('assets/images/satisfied_sleeping.png');
 
   /// File path: assets/images/settings.svg
   SvgGenImage get settings => const SvgGenImage('assets/images/settings.svg');
@@ -69,6 +103,18 @@ class $AssetsImagesGen {
   /// File path: assets/images/skip_filled.svg
   SvgGenImage get skipFilled =>
       const SvgGenImage('assets/images/skip_filled.svg');
+
+  /// File path: assets/images/sleeping_emoji.png
+  AssetGenImage get sleepingEmoji =>
+      const AssetGenImage('assets/images/sleeping_emoji.png');
+
+  /// File path: assets/images/sleeping_emoji1.png
+  AssetGenImage get sleepingEmoji1 =>
+      const AssetGenImage('assets/images/sleeping_emoji1.png');
+
+  /// File path: assets/images/some_what.png
+  AssetGenImage get someWhat =>
+      const AssetGenImage('assets/images/some_what.png');
 
   /// File path: assets/images/sun.svg
   SvgGenImage get sun => const SvgGenImage('assets/images/sun.svg');
@@ -79,32 +125,73 @@ class $AssetsImagesGen {
   /// File path: assets/images/th-list.svg
   SvgGenImage get thList => const SvgGenImage('assets/images/th-list.svg');
 
-  /// File path: assets/images/yawning emoji.svg
-  SvgGenImage get yawningEmoji =>
-      const SvgGenImage('assets/images/yawning-emoji.svg');
+  /// File path: assets/images/time.png
+  AssetGenImage get time => const AssetGenImage('assets/images/time.png');
+
+  /// File path: assets/images/unsatisfied.png
+  AssetGenImage get unsatisfied =>
+      const AssetGenImage('assets/images/unsatisfied.png');
+
+  /// File path: assets/images/very_much.png
+  AssetGenImage get veryMuch =>
+      const AssetGenImage('assets/images/very_much.png');
+
+  /// File path: assets/images/very_satisfied.png
+  AssetGenImage get verySatisfied =>
+      const AssetGenImage('assets/images/very_satisfied.png');
+
+  /// File path: assets/images/very_unsatisfied.png
+  AssetGenImage get veryUnsatisfied =>
+      const AssetGenImage('assets/images/very_unsatisfied.png');
+
+  /// File path: assets/images/waterdrops.png
+  AssetGenImage get waterdrops =>
+      const AssetGenImage('assets/images/waterdrops.png');
+
+  /// File path: assets/images/yawning_emoji.png
+  AssetGenImage get yawningEmoji =>
+      const AssetGenImage('assets/images/yawning_emoji.png');
 
   /// List of all assets
   List<dynamic> get values => [
-        satisfied,
-        sleepingEmoji,
-        sleepingFaceEmoji,
+        aLittle,
         bed,
         calendar,
         clock,
+        clockTime,
+        everyOnceAWhile,
+        lackOfSleep,
+        lightPulb,
         location,
         logo,
         menu,
+        moon,
+        mostNights,
+        neutral,
+        never,
+        notAtAll,
         onboarding1,
         onboarding2,
         onboarding3,
+        pizza,
         pomodoro,
-        removebg,
+        restricted,
+        satisfiedSleeping,
         settings,
         skipFilled,
+        sleepingEmoji,
+        sleepingEmoji1,
+        someWhat,
         sun,
         tag,
         thList,
-        yawningEmoji,
+        time,
+        unsatisfied,
+        veryMuch,
+        verySatisfied,
+        veryUnsatisfied,
+        waterdrops,
+        yawningEmoji
       ];
 }
 
@@ -115,7 +202,11 @@ class Assets {
 }
 
 class AssetGenImage {
-  const AssetGenImage(this._assetName, {this.size, this.flavors = const {}});
+  const AssetGenImage(
+    this._assetName, {
+    this.size,
+    this.flavors = const {},
+  });
 
   final String _assetName;
 
@@ -175,8 +266,15 @@ class AssetGenImage {
     );
   }
 
-  ImageProvider provider({AssetBundle? bundle, String? package}) {
-    return AssetImage(_assetName, bundle: bundle, package: package);
+  ImageProvider provider({
+    AssetBundle? bundle,
+    String? package,
+  }) {
+    return AssetImage(
+      _assetName,
+      bundle: bundle,
+      package: package,
+    );
   }
 
   String get path => _assetName;
@@ -185,11 +283,17 @@ class AssetGenImage {
 }
 
 class SvgGenImage {
-  const SvgGenImage(this._assetName, {this.size, this.flavors = const {}})
-      : _isVecFormat = false;
+  const SvgGenImage(
+    this._assetName, {
+    this.size,
+    this.flavors = const {},
+  }) : _isVecFormat = false;
 
-  const SvgGenImage.vec(this._assetName, {this.size, this.flavors = const {}})
-      : _isVecFormat = true;
+  const SvgGenImage.vec(
+    this._assetName, {
+    this.size,
+    this.flavors = const {},
+  }) : _isVecFormat = true;
 
   final String _assetName;
   final Size? size;

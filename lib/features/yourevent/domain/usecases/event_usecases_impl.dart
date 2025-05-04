@@ -1,5 +1,5 @@
-import '../../data/models/event_model.dart';
-import '../../data/repositories/event_repository.dart';
+import '../../../../core/data/models/event_model.dart';
+import '../../../../core/data/repositories/event_repository.dart';
 import '../entities/event.dart';
 import 'event_usecases.dart';
 

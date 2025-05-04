@@ -1,8 +1,8 @@
 import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../data/models/daily_tracker_model.dart';
-import '../../../data/repositories/dashboard_repository.dart';
-import '../../../data/repositories/event_repository.dart';
+import '../../../../../core/data/models/daily_tracker_model.dart';
+import '../../../../../core/data/repositories/dashboard_repository.dart';
+import '../../../../../core/data/repositories/event_repository.dart';
 import 'dashboard_state.dart';
 
 class DashboardCubit extends Cubit<DashboardState> {

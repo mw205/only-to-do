@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../data/models/event_model.dart';
-import '../../../data/repositories/event_repository.dart';
+import '../../../../../core/data/models/event_model.dart';
+import '../../../../../core/data/repositories/event_repository.dart';
 import '../../../services/notification_service.dart';
 import 'events_state.dart';
 
