@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:only_to_do/features/yourevent/presentation/pages/auth/login_page.dart';
-import '../cubits/auth/auth_cubit.dart';
+import 'package:only_to_do/features/auth/presentation/pages/login_page.dart';
+import '../../../auth/presentation/cubit/auth_cubit.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;

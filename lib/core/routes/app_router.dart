@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:only_to_do/features/edit_task/presentation/views/edit_task_view.dart';
+import 'package:only_to_do/features/pomodoro/presentation/views/pomodoro_page.dart';
 
-
-import '../../features/pomodoro/presentation/views/pomodoro_view.dart';
+import '../../features/edit_task/presentation/views/edit_task_view.dart';
+import '../../features/on_boarding/on_boarding_view.dart';
+import '../../features/on_boarding/widgets/welcome_screen.dart';
 import '../../features/splash/presentation/views/splash_view.dart';
-import '../../features/yourevent/presentation/pages/auth/login_page.dart';
-import '../../features/yourevent/presentation/pages/auth/signup_page.dart';
+import '../../features/auth/presentation/pages/login_page.dart';
+import '../../features/auth/presentation/pages/signup_page.dart';
 import '../../features/yourevent/presentation/pages/home_page.dart';
 
 class AppRouter {
@@ -23,10 +24,15 @@ class AppRouter {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             child: const LoginPage(),
-            transitionDuration: const Duration(milliseconds: 1500),
+            transitionDuration: const Duration(milliseconds: 500),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
-              return FadeTransition(opacity: animation, child: child);
+              return SlideTransition(
+                  position: Tween<Offset>(
+                    begin: Offset(1, 0),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child);
             },
           );
         },
@@ -36,10 +42,15 @@ class AppRouter {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             child: const SignupPage(),
-            transitionDuration: const Duration(milliseconds: 1500),
+            transitionDuration: const Duration(milliseconds: 500),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
-              return FadeTransition(opacity: animation, child: child);
+              return SlideTransition(
+                  position: Tween<Offset>(
+                    begin: Offset(1, 0),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child);
             },
           );
         },
@@ -58,14 +69,49 @@ class AppRouter {
         },
       ),
       GoRoute(
-        path: EditTaskView.id,
-        builder: (context, state) => EditTaskView(),
-      ),
-      GoRoute(
-        path: PomodoroView.id,
+        path: PomodoroPage.id,
         pageBuilder: (context, state) {
           return CustomTransitionPage(
-            child: PomodoroView(),
+            child: PomodoroPage(),
+            transitionDuration: Duration(milliseconds: 1500),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(opacity: animation, child: child);
+            },
+          );
+        },
+      ),
+      GoRoute(
+        path: WelcomeScreen.id,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: WelcomeScreen(),
+            transitionDuration: Duration(milliseconds: 1500),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(opacity: animation, child: child);
+            },
+          );
+        },
+      ),
+      GoRoute(
+        path: EditTaskView.id,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: EditTaskView(),
+            transitionDuration: Duration(milliseconds: 1500),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(opacity: animation, child: child);
+            },
+          );
+        },
+      ),
+      GoRoute(
+        path: OnBoardingView.id,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: OnBoardingView(),
             transitionDuration: Duration(milliseconds: 1500),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {

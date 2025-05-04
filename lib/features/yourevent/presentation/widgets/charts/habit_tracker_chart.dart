@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../data/models/daily_tracker_model.dart';
+import '../../../../../core/data/models/daily_tracker_model.dart';
 
 class HabitTrackerChart extends StatelessWidget {
   final List<DailyTrackerModel> trackers;

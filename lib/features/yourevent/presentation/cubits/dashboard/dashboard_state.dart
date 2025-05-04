@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../../data/models/daily_tracker_model.dart';
+import '../../../../../core/data/models/daily_tracker_model.dart';
 
 enum DashboardStatus { initial, loading, success, failure }
 

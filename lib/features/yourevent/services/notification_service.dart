@@ -1,11 +1,12 @@
 // lib/services/notification_service.dart
+import 'dart:async';
 import 'dart:developer';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:timezone/data/latest.dart' as tz_data;
-import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:timezone/data/latest.dart' as tz_data;
 
 class NotificationService {
   // Singleton pattern
@@ -107,7 +108,7 @@ class NotificationService {
   Future<void> _initAwesomeNotifications() async {
     await AwesomeNotifications().initialize(
       // Set null to use the default app icon
-      'resource://drawable/ic_launcher',
+      'resource://mipmap/ic_launcher',
       [
         // Events channel
         NotificationChannel(

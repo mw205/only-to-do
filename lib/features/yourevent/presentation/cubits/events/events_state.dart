@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../../data/models/event_model.dart';
+import '../../../../../core/data/models/event_model.dart';
 
 enum EventsStatus { initial, loading, success, failure }
 

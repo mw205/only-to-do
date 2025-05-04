@@ -1,5 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../data/repositories/dashboard_repository.dart';
+import '../../../../core/data/repositories/dashboard_repository.dart';
 import '../entities/pomodoro_settings.dart';
 import '../../services/firebase_service.dart';
 import 'pomodoro_usecases.dart';

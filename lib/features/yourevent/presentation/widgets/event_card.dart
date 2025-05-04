@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../data/models/event_model.dart';
+import '../../../../core/data/models/event_model.dart';
 import 'countdown_timer.dart';
 
 class EventCard extends StatelessWidget {

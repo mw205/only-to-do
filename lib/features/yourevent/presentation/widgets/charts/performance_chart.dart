@@ -2,7 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../data/models/daily_tracker_model.dart';
+import '../../../../../core/data/models/daily_tracker_model.dart';
 
 class PerformanceChart extends StatelessWidget {
   static const Color activeColor = Colors.green; // Define activeColor

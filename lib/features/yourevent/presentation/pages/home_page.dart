@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../cubits/auth/auth_cubit.dart';
-import '../cubits/auth/auth_state.dart';
+import '../../../auth/presentation/cubit/auth_cubit.dart';
+import '../../../auth/presentation/cubit/auth_state.dart';
 
 // Original pages
-import 'auth/login_page.dart';
+import '../../../auth/presentation/pages/login_page.dart';
 import 'dashboard/dashboard_page.dart';
 import 'events/add_edit_event_page.dart';
 import 'events/events_list_page.dart';
-import 'pomodoro/pomodoro_page.dart';
+import '../../../pomodoro/presentation/views/pomodoro_page.dart';
 
 // New pages
 import 'calendar/monthly_view_page.dart';
