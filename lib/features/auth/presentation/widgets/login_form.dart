@@ -64,7 +64,9 @@ class LoginForm extends StatelessWidget {
           CustomButton(
             onPressed: isLoading ? null : onSignIn,
             child: isLoading
-                ? const CircularProgressIndicator()
+                ? const CircularProgressIndicator(
+                    color: ColorName.white,
+                  )
                 : Text(
                     'Sign In',
                     style: TextStyle(

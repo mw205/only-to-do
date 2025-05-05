@@ -16,7 +16,6 @@ class AppRouter {
   AppRouter._();
 
   static final router = GoRouter(
-    initialLocation: SleepQuestionsFlow.id,
     routes: [
       GoRoute(
         path: SplashView.id,

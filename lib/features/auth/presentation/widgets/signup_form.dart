@@ -94,7 +94,9 @@ class SignupForm extends StatelessWidget {
           CustomButton(
             onPressed: isLoading ? null : onSignUp,
             child: isLoading
-                ? const CircularProgressIndicator()
+                ? const CircularProgressIndicator(
+                    color: ColorName.white,
+                  )
                 : const Text(
                     'Create Account',
                     style: TextStyle(
