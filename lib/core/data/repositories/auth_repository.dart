@@ -1,8 +1,9 @@
 import 'dart:developer';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../features/yourevent/services/firebase_service.dart';
 import '../models/user_model.dart';
 
@@ -56,6 +57,7 @@ class AuthRepository {
           name: email.split('@')[0],
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
+          isPremuim: false,
         );
 
         await _usersCollection
@@ -98,6 +100,7 @@ class AuthRepository {
 
       // Create user document in Firestore
       final newUser = UserModel(
+        isPremuim: false,
         id: userCredential.user!.uid,
         email: email,
         name: name,

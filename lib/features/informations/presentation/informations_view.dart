@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:only_to_do/features/informations/data/question_model.dart';
+import 'package:only_to_do/features/informations/presentation/user_health_form.dart';
 import 'package:only_to_do/features/informations/presentation/widgets/question_step_widget.dart';
 import 'package:only_to_do/gen/assets.gen.dart';
 import 'package:only_to_do/gen/colors.gen.dart';
@@ -22,19 +24,6 @@ class _SleepQuestionsFlowState extends State<SleepQuestionsFlow> {
   int currentStep = 0;
   List<QuestionModel> questions = [
     QuestionModel(
-      question: 'How much sleep do you, usually get at night?',
-      options: [
-        OptionModel(
-            title: '6 hours or less', image: Assets.images.clockTime.image()),
-        OptionModel(title: '6-8 hours', image: Assets.images.clockTime.image()),
-        OptionModel(
-            title: '8-10 hours', image: Assets.images.clockTime.image()),
-        OptionModel(
-            title: '10 hours or more', image: Assets.images.clockTime.image())
-      ],
-      photo: Assets.images.sleepingEmoji1.image(),
-    ),
-    QuestionModel(
       question: 'How long does it take to fall asleep after you get into bed?',
       options: [
         OptionModel(
@@ -45,24 +34,6 @@ class _SleepQuestionsFlowState extends State<SleepQuestionsFlow> {
             title: 'Hard to fall asleep', image: Assets.images.time.image())
       ],
       photo: Assets.images.bed.image(),
-    ),
-    QuestionModel(
-      question: 'Which habit do you have that may affect your sleep quality?',
-      options: [
-        OptionModel(title: 'Stay up late', image: Assets.images.moon.image()),
-        OptionModel(
-            title: 'Sleep with wet hair',
-            image: Assets.images.waterdrops.image()),
-        OptionModel(
-            title: 'Heavy food before sleep',
-            image: Assets.images.pizza.image()),
-        OptionModel(
-            title: 'Sleep with light on',
-            image: Assets.images.lightPulb.image()),
-        OptionModel(
-            title: 'None of these', image: Assets.images.restricted.image())
-      ],
-      photo: Assets.images.yawningEmoji.image(),
     ),
     QuestionModel(
       question:
@@ -78,21 +49,11 @@ class _SleepQuestionsFlowState extends State<SleepQuestionsFlow> {
       photo: Assets.images.sleepingEmoji.image(),
     ),
     QuestionModel(
-      question: 'Does lack of sleep affect your daily life?',
-      options: [
-        OptionModel(title: 'Not at all', image: Assets.images.notAtAll.image()),
-        OptionModel(title: 'A little', image: Assets.images.aLittle.image()),
-        OptionModel(title: 'Some what', image: Assets.images.someWhat.image()),
-        OptionModel(title: 'Very much', image: Assets.images.veryMuch.image())
-      ],
-      photo: Assets.images.lackOfSleep.image(),
-    ),
-    QuestionModel(
       question: 'How satisfied are you with your sleep?',
       options: [
         OptionModel(
             title: 'Very satisfied',
-            image: Assets.images.veryUnsatisfied.image()),
+            image: Assets.images.verySatisfied.image()),
         OptionModel(title: 'Neutral', image: Assets.images.neutral.image()),
         OptionModel(
             title: 'Unsatisfied', image: Assets.images.unsatisfied.image()),
@@ -156,7 +117,6 @@ class _SleepQuestionsFlowState extends State<SleepQuestionsFlow> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF011222),
       body: SafeArea(
         child: Column(
           children: [
@@ -198,11 +158,13 @@ class _SleepQuestionsFlowState extends State<SleepQuestionsFlow> {
                         Padding(
                           padding: EdgeInsets.all(16.h),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
                                 decoration: BoxDecoration(
-                                    color: Colors.white.withValues(alpha: 0.2),
-                                    shape: BoxShape.circle),
+                                  color: ColorName.purple,
+                                  shape: BoxShape.circle,
+                                ),
                                 child: IconButton(
                                   onPressed: () {
                                     previousStep();
@@ -214,19 +176,28 @@ class _SleepQuestionsFlowState extends State<SleepQuestionsFlow> {
                                 ),
                               ),
                               if (isForTimePicking)
-                                Container(
-                                  decoration: BoxDecoration(
-                                      color: selectedAnswers[index] != null
-                                          ? ColorName.purple
-                                          : Colors.white.withValues(alpha: 0.2),
-                                      shape: BoxShape.circle),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      nextStep();
-                                    },
-                                    icon: Icon(
-                                      Icons.arrow_forward_rounded,
-                                      color: Colors.white,
+                                AnimatedContainer(
+                                  duration: Duration(milliseconds: 1000),
+                                  curve: Curves.linear,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: selectedAnswers[index] != null
+                                            ? ColorName.purple
+                                            : Colors.white
+                                                .withValues(alpha: 0.2),
+                                        shape: BoxShape.circle),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        if (index == questions.length - 1) {
+                                          context.push(UserHealthForm.id);
+                                          return;
+                                        }
+                                        nextStep();
+                                      },
+                                      icon: Icon(
+                                        Icons.arrow_forward_rounded,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),

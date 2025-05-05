@@ -18,7 +18,7 @@ class QuestionText extends StatelessWidget {
         question,
         textAlign: TextAlign.center,
         style: const TextStyle(
-          color: ColorName.white,
+          color: ColorName.black,
           fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
