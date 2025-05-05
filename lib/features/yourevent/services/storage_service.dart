@@ -1,6 +1,9 @@
 import 'dart:convert';
+
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../domain/entities/pomodoro_settings.dart';
 
 class StorageService {
@@ -15,9 +18,9 @@ class StorageService {
   static const String _settingsBoxName = 'settings_box';
   static const String _trackerBoxName = 'tracker_box';
 
-  // SharedPreferences instance
+  // SecureStorage instance
+  late FlutterSecureStorage _securePrefs;
   late SharedPreferences _prefs;
-
   // Hive boxes
   late Box _eventsBox;
   late Box _userBox;
@@ -26,6 +29,7 @@ class StorageService {
 
   // Initialize storage
   Future<void> init() async {
+    _prefs = await SharedPreferences.getInstance();
     // Initialize Hive
     await Hive.initFlutter();
 
@@ -36,7 +40,7 @@ class StorageService {
     _trackerBox = await Hive.openBox(_trackerBoxName);
 
     // Initialize SharedPreferences
-    _prefs = await SharedPreferences.getInstance();
+    _securePrefs = FlutterSecureStorage();
   }
 
   // USER RELATED METHODS
@@ -44,44 +48,50 @@ class StorageService {
   // Save user ID
   Future<void> saveUserId(String userId) async {
     await _userBox.put('user_id', userId);
-    await _prefs.setString('user_id', userId);
+    await _securePrefs.write(key: 'user_id', value: userId);
   }
 
   // Get user ID
-  String? getUserId() {
-    return _userBox.get('user_id') as String? ?? _prefs.getString('user_id');
+  Future<String?> getUserId() async {
+    return _userBox.get('user_id') as String? ??
+        await _securePrefs.read(key: 'user_id');
   }
 
   // Save user email
   Future<void> saveUserEmail(String email) async {
     await _userBox.put('user_email', email);
-    await _prefs.setString('user_email', email);
+    await _securePrefs.write(key: 'user_email', value: email);
   }
 
   // Get user email
-  String? getUserEmail() {
+  Future<String?> getUserEmail() async {
     return _userBox.get('user_email') as String? ??
-        _prefs.getString('user_email');
+        await _securePrefs.read(key: 'user_email');
   }
 
   // Save user name
   Future<void> saveUserName(String name) async {
     await _userBox.put('user_name', name);
-    await _prefs.setString('user_name', name);
+    await _securePrefs.write(key: 'user_name', value: name);
   }
 
   // Get user name
-  String? getUserName() {
+  Future<String?> getUserName() async {
     return _userBox.get('user_name') as String? ??
-        _prefs.getString('user_name');
+        await _securePrefs.read(key: 'user_name');
+  }
+
+  Future<bool?> checkIfUserIsPremuim() async {
+    return _userBox.get('user_name') as bool? ??
+        bool.parse(await _securePrefs.read(key: 'isUserPremuim') as String);
   }
 
   // Clear user data
   Future<void> clearUserData() async {
     await _userBox.clear();
-    await _prefs.remove('user_id');
-    await _prefs.remove('user_email');
-    await _prefs.remove('user_name');
+    await _securePrefs.delete(key: 'user_id');
+    await _securePrefs.delete(key: 'user_email');
+    await _securePrefs.delete(key: 'user_name');
   }
 
   // POMODORO SETTINGS METHODS
@@ -335,11 +345,6 @@ class StorageService {
     }
   }
 
-  // Remove data by key
-  Future<void> removeData(String key) async {
-    await _prefs.remove(key);
-  }
-
   // Clear all data
   Future<void> clearAll() async {
     await _eventsBox.clear();
@@ -347,6 +352,7 @@ class StorageService {
     await _settingsBox.clear();
     await _trackerBox.clear();
     await _prefs.clear();
+    await _securePrefs.deleteAll();
   }
 
   // Check if there's cached data available for offline use
@@ -355,8 +361,8 @@ class StorageService {
   }
 
   // Check if the user is logged in
-  bool isUserLoggedIn() {
-    final userId = getUserId();
+  Future<bool> isUserLoggedIn() async {
+    final userId = await getUserId();
     return userId != null && userId.isNotEmpty;
   }
 }

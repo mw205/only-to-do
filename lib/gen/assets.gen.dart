@@ -104,6 +104,10 @@ class $AssetsImagesGen {
   SvgGenImage get skipFilled =>
       const SvgGenImage('assets/images/skip_filled.svg');
 
+  /// File path: assets/images/sleep_score.svg
+  SvgGenImage get sleepScore =>
+      const SvgGenImage('assets/images/sleep_score.svg');
+
   /// File path: assets/images/sleeping_emoji.png
   AssetGenImage get sleepingEmoji =>
       const AssetGenImage('assets/images/sleeping_emoji.png');
@@ -179,6 +183,7 @@ class $AssetsImagesGen {
         satisfiedSleeping,
         settings,
         skipFilled,
+        sleepScore,
         sleepingEmoji,
         sleepingEmoji1,
         someWhat,
@@ -196,9 +201,13 @@ class $AssetsImagesGen {
 }
 
 class Assets {
-  const Assets._();
+  Assets._();
 
+  static const String aEnv = '.env';
   static const $AssetsImagesGen images = $AssetsImagesGen();
+
+  /// List of all assets
+  static List<String> get values => [aEnv];
 }
 
 class AssetGenImage {
@@ -234,7 +243,7 @@ class AssetGenImage {
     bool gaplessPlayback = true,
     bool isAntiAlias = false,
     String? package,
-    FilterQuality filterQuality = FilterQuality.medium,
+    FilterQuality filterQuality = FilterQuality.low,
     int? cacheWidth,
     int? cacheHeight,
   }) {

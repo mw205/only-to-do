@@ -38,6 +38,11 @@ class BottomActionsBar extends StatelessWidget {
                 colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
                 width: 24.w,
               ),
+              SizedBox(width: 12),
+              Assets.images.sleepScore.svg(
+                colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
+                width: 24.w,
+              ),
             ],
           ),
           Expanded(
