@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 class FirebaseService {
@@ -60,5 +60,14 @@ class FirebaseService {
         // Show local notification
       }
     });
+  }
+
+  /// Checks if the current user is a premium user.
+  ///
+  /// Returns [true] if the user is a premium user, [false] otherwise.
+  Future<bool> isPremuimUser() async {
+    final docSnapshot =
+        await _firestore.collection('users').doc(currentUserId).get();
+    return docSnapshot['premiumUser'] ?? false;
   }
 }

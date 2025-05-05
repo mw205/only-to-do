@@ -1,29 +1,29 @@
-// lib/presentation/pages/auth/login_page.dart
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:only_to_do/gen/colors.gen.dart';
 
 class CustomTextFormField extends StatefulWidget {
   final TextEditingController controller;
   final String labelText;
-  final IconData prefixIcon;
+  final IconData? prefixIcon;
   final IconData? suffixIcon;
   final VoidCallback? onSuffixIconPressed;
   final TextInputType keyboardType;
   final String? Function(String?) validator;
   final bool obscureText;
-
+  final List<TextInputFormatter>? formatters;
   const CustomTextFormField({
     super.key,
     required this.controller,
     required this.labelText,
-    required this.prefixIcon,
+    this.prefixIcon,
     this.suffixIcon,
     this.onSuffixIconPressed,
     this.keyboardType = TextInputType.text,
     required this.validator,
     this.obscureText = false,
+    this.formatters,
   });
 
   @override
@@ -55,6 +55,7 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
             ],
           ),
           child: TextFormField(
+            inputFormatters: widget.formatters,
             controller: widget.controller,
             keyboardType: widget.keyboardType,
             decoration: InputDecoration(

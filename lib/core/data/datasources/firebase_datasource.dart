@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import '../../constants/app_strings.dart';
+import '../../constants/app_constants.dart';
 import '../models/event_model.dart';
 import '../models/user_model.dart';
 import '../models/daily_tracker_model.dart';

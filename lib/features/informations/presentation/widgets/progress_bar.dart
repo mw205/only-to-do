@@ -19,8 +19,8 @@ class ProgressBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         child: LinearProgressIndicator(
           value: (currentStep + 1) / totalSteps,
-          backgroundColor: ColorName.white.withValues(alpha:  0.2),
-          valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
+          backgroundColor: ColorName.purple.withValues(alpha: 0.2),
+          valueColor: const AlwaysStoppedAnimation<Color>(ColorName.purple),
           minHeight: 4,
         ),
       ),

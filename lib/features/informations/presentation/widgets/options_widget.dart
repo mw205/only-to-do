@@ -26,7 +26,7 @@ class OptionsWidget extends StatelessWidget {
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: Color(0xff222239),
+                  color: ColorName.purple.withValues(alpha: 0.9),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Center(

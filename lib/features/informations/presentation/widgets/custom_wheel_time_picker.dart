@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wheel_picker/wheel_picker.dart';
 
+import '../../../../gen/colors.gen.dart';
+
 class CustomWheelTimePicker extends StatefulWidget {
   const CustomWheelTimePicker({super.key, this.onSelectTime});
   final void Function(Duration duration)? onSelectTime;
@@ -29,7 +31,7 @@ class _CustomWheelTimePickerState extends State<CustomWheelTimePicker> {
     TextStyle textStyle = TextStyle(
       fontSize: 26.sp,
       height: 1.5,
-      color: Colors.white,
+      color: ColorName.grey2,
     );
     final wheelStyle = WheelPickerStyle(
       itemExtent: textStyle.fontSize! * textStyle.height!, // Text height
@@ -40,6 +42,7 @@ class _CustomWheelTimePickerState extends State<CustomWheelTimePicker> {
     );
     final amPmWheel = Expanded(
       child: WheelPicker(
+        selectedIndexColor: Colors.white,
         builder: (context, index) {
           return Text(["AM", "PM"][index], style: textStyle);
         },
@@ -75,7 +78,8 @@ class _CustomWheelTimePickerState extends State<CustomWheelTimePicker> {
           ),
         ),
     ];
-    timeWheels.insert(1, Text(":", style: textStyle));
+    timeWheels.insert(
+        1, Text(":", style: textStyle.copyWith(color: Colors.white)));
     return Center(
       child: SizedBox(
         width: 200.w,
@@ -105,7 +109,7 @@ class _CustomWheelTimePickerState extends State<CustomWheelTimePicker> {
       child: Container(
         height: 38.h,
         decoration: BoxDecoration(
-          color: const Color(0xFFC3C9FA).withAlpha(26),
+          color: ColorName.purple,
           borderRadius: BorderRadius.circular(8.r),
         ),
       ),

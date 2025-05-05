@@ -8,7 +8,7 @@ class UserModel extends Equatable {
   final String? photoUrl;
   final DateTime createdAt;
   final DateTime updatedAt;
-
+  final bool? isPremuim;
   const UserModel({
     required this.id,
     required this.email,
@@ -16,6 +16,7 @@ class UserModel extends Equatable {
     this.photoUrl,
     required this.createdAt,
     required this.updatedAt,
+    required this.isPremuim,
   });
 
   // Convert Firestore document to UserModel
@@ -28,6 +29,7 @@ class UserModel extends Equatable {
       photoUrl: data['photoUrl'],
       createdAt: (data['createdAt'] as Timestamp).toDate(),
       updatedAt: (data['updatedAt'] as Timestamp).toDate(),
+      isPremuim: data['isPremuim'] ?? false,
     );
   }
 
@@ -39,6 +41,7 @@ class UserModel extends Equatable {
       'photoUrl': photoUrl,
       'createdAt': Timestamp.fromDate(createdAt),
       'updatedAt': Timestamp.fromDate(updatedAt),
+      'isPremuim': isPremuim,
     };
   }
 
@@ -50,6 +53,7 @@ class UserModel extends Equatable {
     String? photoUrl,
     DateTime? createdAt,
     DateTime? updatedAt,
+    bool? isPremuim,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -58,9 +62,11 @@ class UserModel extends Equatable {
       photoUrl: photoUrl ?? this.photoUrl,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      isPremuim: isPremuim ?? this.isPremuim,
     );
   }
 
   @override
-  List<Object?> get props => [id, email, name, photoUrl, createdAt, updatedAt];
+  List<Object?> get props =>
+      [id, email, name, photoUrl, createdAt, updatedAt, isPremuim];
 }

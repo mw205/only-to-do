@@ -16,9 +16,11 @@ import 'features/pomodoro/presentation/cubit/pomodoro_cubit.dart';
 import 'features/yourevent/services/notification_service.dart';
 import 'gen/colors.gen.dart';
 import 'gen/fonts.gen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
 
   // Initialize Firebase
   await Firebase.initializeApp();
