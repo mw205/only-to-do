@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../../features/yourevent/services/firebase_service.dart';
 import '../models/user_model.dart';
@@ -10,6 +10,7 @@ import '../models/user_model.dart';
 class AuthRepository {
   final FirebaseService _firebaseService = FirebaseService();
 
+  FlutterSecureStorage storage = const FlutterSecureStorage();
   // Reference to users collection
   CollectionReference get _usersCollection =>
       _firebaseService.firestore.collection('users');
@@ -135,10 +136,10 @@ class AuthRepository {
       await _firebaseService.auth.signOut();
 
       // Clear user info from SharedPreferences
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.remove('user_id');
-      await prefs.remove('user_email');
-      await prefs.remove('user_name');
+
+      await storage.delete(key: 'user_id');
+      await storage.delete(key: 'user_email');
+      await storage.delete(key: 'user_name');
     } catch (e) {
       throw Exception('Sign out failed: $e');
     }
@@ -147,10 +148,9 @@ class AuthRepository {
   // Save user info to SharedPreferences
   Future<void> _saveUserToPrefs(UserModel user) async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('user_id', user.id);
-      await prefs.setString('user_email', user.email);
-      await prefs.setString('user_name', user.name);
+      await storage.write(key: 'user_id', value: user.id);
+      await storage.write(key: 'user_email', value: user.email);
+      await storage.write(key: 'user_name', value: user.name);
     } catch (e) {
       log('Error saving user to preferences: $e');
     }

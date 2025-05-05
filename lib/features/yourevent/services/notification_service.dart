@@ -5,7 +5,7 @@ import 'dart:developer';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:timezone/data/latest.dart' as tz_data;
 
 class NotificationService {
@@ -62,18 +62,16 @@ class NotificationService {
     // Get FCM token
     String? token = await _firebaseMessaging.getToken();
     log('FCM Token: $token');
-
+    final prefs = FlutterSecureStorage();
     // Save token to local storage
     if (token != null) {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('fcm_token', token);
+      await prefs.write(key: 'fcm_token', value: token);
     }
 
     // Handle token refresh
     _firebaseMessaging.onTokenRefresh.listen((newToken) async {
       log('FCM Token refreshed: $newToken');
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('fcm_token', newToken);
+      await prefs.write(key: 'fcm_token', value: token);
     });
 
     // Handle foreground messages

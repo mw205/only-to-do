@@ -1,7 +1,7 @@
-import '../models/event_model.dart';
-import '../models/daily_tracker_model.dart';
-import '../models/user_model.dart';
 import '../../../features/yourevent/services/storage_service.dart';
+import '../models/daily_tracker_model.dart';
+import '../models/event_model.dart';
+import '../models/user_model.dart';
 
 class LocalDataSource {
   final StorageService _storageService = StorageService();
@@ -21,12 +21,14 @@ class LocalDataSource {
   }
 
   // Get current user
-  UserModel? getCurrentUser() {
-    final userId = _storageService.getUserId();
-    final email = _storageService.getUserEmail();
-    final name = _storageService.getUserName();
-
-    if (userId == null || email == null || name == null) return null;
+  Future<UserModel?> getCurrentUser() async {
+    final userId = await _storageService.getUserId();
+    final email = await _storageService.getUserEmail();
+    final name = await _storageService.getUserName();
+    final isPremuim = await _storageService.checkIfUserIsPremuim();
+    if (userId == null || email == null || name == null || isPremuim == null) {
+      return null;
+    }
 
     return UserModel(
       id: userId,
@@ -34,6 +36,7 @@ class LocalDataSource {
       name: name,
       createdAt: DateTime.now(), // Not accurate but just for local use
       updatedAt: DateTime.now(),
+      isPremuim: isPremuim,
     );
   }
 
@@ -202,10 +205,9 @@ class LocalDataSource {
       title: map['title'],
       description: map['description'],
       eventDate: DateTime.fromMillisecondsSinceEpoch(map['eventDate']),
-      reminderTimes:
-          (map['reminderTimes'] as List)
-              .map((stamp) => DateTime.fromMillisecondsSinceEpoch(stamp))
-              .toList(),
+      reminderTimes: (map['reminderTimes'] as List)
+          .map((stamp) => DateTime.fromMillisecondsSinceEpoch(stamp))
+          .toList(),
       userId: map['userId'],
       isCompleted: map['isCompleted'],
       color: map['color'],

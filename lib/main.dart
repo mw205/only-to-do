@@ -1,22 +1,23 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:only_to_do/features/yourevent/services/storage_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'core/routes/app_router.dart';
 import 'core/data/repositories/auth_repository.dart';
 import 'core/data/repositories/dashboard_repository.dart';
 import 'core/data/repositories/event_repository.dart';
+import 'core/routes/app_router.dart';
 import 'features/auth/presentation/cubit/auth_cubit.dart';
+import 'features/pomodoro/presentation/cubit/pomodoro_cubit.dart';
 import 'features/yourevent/presentation/cubits/dashboard/dashboard_cubit.dart';
 import 'features/yourevent/presentation/cubits/events/events_cubit.dart';
-import 'features/pomodoro/presentation/cubit/pomodoro_cubit.dart';
 import 'features/yourevent/services/notification_service.dart';
 import 'gen/colors.gen.dart';
 import 'gen/fonts.gen.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +32,7 @@ Future<void> main() async {
   // Initialize notification services
   await NotificationService().init();
 
+  StorageService().init();
   // Note: We don't need to set up listeners here as they're already set up
   // in the NotificationService class
 

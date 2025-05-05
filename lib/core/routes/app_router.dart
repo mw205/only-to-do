@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:only_to_do/features/informations/presentation/user_health_form.dart';
 import 'package:only_to_do/features/pomodoro/presentation/views/pomodoro_page.dart';
 
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/signup_page.dart';
 import '../../features/edit_task/presentation/views/edit_task_view.dart';
-import '../../features/informations/presentation/informations_view.dart';
 import '../../features/on_boarding/on_boarding_view.dart';
 import '../../features/on_boarding/widgets/welcome_screen.dart';
+import '../../features/sleep_tracking/collect_informations/presentation/informations_view.dart';
+import '../../features/sleep_tracking/collect_informations/presentation/user_health_form.dart';
+import '../../features/sleep_tracking/premium_check/premuim_check_page.dart';
 import '../../features/splash/presentation/views/splash_view.dart';
 import '../../features/yourevent/presentation/pages/home_page.dart';
 
@@ -16,7 +17,6 @@ class AppRouter {
   AppRouter._();
 
   static final router = GoRouter(
-    initialLocation: SleepQuestionsFlow.id,
     routes: [
       GoRoute(
         path: SplashView.id,
@@ -141,6 +141,22 @@ class AppRouter {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             child: UserHealthForm(),
+            transitionDuration: Duration(milliseconds: 500),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(opacity: animation, child: child);
+            },
+          );
+        },
+      ),
+      GoRoute(
+        path: PremiumCheckScreen.id,
+        pageBuilder: (context, state) {
+          final isPremium = state.extra as bool;
+          return CustomTransitionPage(
+            child: PremiumCheckScreen(
+              isPremium: isPremium,
+            ),
             transitionDuration: Duration(milliseconds: 500),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {

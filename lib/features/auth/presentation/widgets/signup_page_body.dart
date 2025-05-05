@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:only_to_do/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:only_to_do/features/auth/presentation/cubit/auth_state.dart';
 import 'package:only_to_do/features/auth/presentation/widgets/app_logo.dart';
@@ -36,7 +37,7 @@ class _SignupPageBodyState extends State<SignupPageBody> {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state.status == AuthStatus.authenticated) {
-          Navigator.of(context).pushReplacementNamed(HomePage.id);
+          context.pushReplacement(HomePage.id);
         } else if (state.status == AuthStatus.failure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

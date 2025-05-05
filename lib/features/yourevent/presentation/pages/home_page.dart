@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:only_to_do/features/yourevent/services/storage_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../../gen/assets.gen.dart';
 import '../../../auth/presentation/cubit/auth_cubit.dart';
 import '../../../auth/presentation/cubit/auth_state.dart';
-
 // Original pages
 import '../../../auth/presentation/pages/login_page.dart';
+import '../../../pomodoro/presentation/views/pomodoro_page.dart';
+import '../../../sleep_tracking/collect_informations/presentation/informations_view.dart';
+// New pages
+import '../../../sleep_tracking/premium_check/premuim_check_page.dart';
+import 'calendar/monthly_view_page.dart';
+import 'calendar/weekly_view_page.dart';
 import 'dashboard/dashboard_page.dart';
 import 'events/add_edit_event_page.dart';
 import 'events/events_list_page.dart';
-import '../../../pomodoro/presentation/views/pomodoro_page.dart';
-
-// New pages
-import 'calendar/monthly_view_page.dart';
-import 'calendar/weekly_view_page.dart';
 import 'mailboxes/mailboxes_page.dart';
 import 'tasks/edit_task_page.dart';
 import 'tasks/tasks_page.dart';
@@ -36,6 +40,7 @@ class _HomePageState extends State<HomePage> {
     const EventsListPage(),
     const PomodoroPage(),
     const DashboardPage(),
+    const SleepQuestionsFlow()
   ];
 
   // New layout pages
@@ -45,15 +50,6 @@ class _HomePageState extends State<HomePage> {
     const WeeklyViewPage(),
     const MonthlyViewPage(),
   ];
-
-  final List<String> _newTitles = [
-    'Tasks',
-    'Mailboxes',
-    'Weekly View',
-    'Monthly View',
-  ];
-  final List<String> _originalTitles = ['Events', 'Pomodoro', 'Dashboard'];
-
   @override
   void initState() {
     super.initState();
@@ -83,18 +79,8 @@ class _HomePageState extends State<HomePage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xffeee9ff),
           elevation: 0, // Flat look as in the image
-          toolbarHeight: 100,
-          title: Text(
-            _isOriginalLayout
-                ? _originalTitles[_selectedIndex]
-                : _newTitles[_selectedIndex],
-            style: const TextStyle(
-              fontSize: 24, // Increase title font size
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          toolbarHeight: 40.h,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
               bottom: Radius.circular(20), // Keep the rounded bottom corners
@@ -104,13 +90,14 @@ class _HomePageState extends State<HomePage> {
             size: 24, // Increase icon size
           ),
           actions: [
-            IconButton(
-              icon: Icon(
-                _isOriginalLayout ? Icons.view_module : Icons.view_agenda,
+            if (_selectedIndex == 0)
+              IconButton(
+                icon: Icon(
+                  _isOriginalLayout ? Icons.view_module : Icons.view_agenda,
+                ),
+                onPressed: _toggleLayout,
+                tooltip: 'Switch layout',
               ),
-              onPressed: _toggleLayout,
-              tooltip: 'Switch layout',
-            ),
           ],
         ),
         drawer: _buildDrawer(),
@@ -325,12 +312,27 @@ class _HomePageState extends State<HomePage> {
       onTap: _onItemTapped,
       selectedItemColor: Theme.of(context).colorScheme.primary,
       unselectedItemColor: Colors.grey,
-      items: const [
+      items: [
         BottomNavigationBarItem(icon: Icon(Icons.event), label: 'Events'),
         BottomNavigationBarItem(icon: Icon(Icons.timer), label: 'Pomodoro'),
         BottomNavigationBarItem(
           icon: Icon(Icons.dashboard),
           label: 'Dashboard',
+        ),
+        BottomNavigationBarItem(
+          activeIcon: Assets.images.sleepScoreActive.svg(
+            height: 24.h,
+          ),
+          icon: Badge(
+            child: Assets.images.sleepScore.svg(
+              height: 24.h,
+              colorFilter: ColorFilter.mode(
+                Colors.grey,
+                BlendMode.srcIn,
+              ),
+            ),
+          ),
+          label: 'Sleep Tracking',
         ),
       ],
     );
@@ -360,7 +362,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Handle bottom navigation item tap
-  void _onItemTapped(int index) {
+  void _onItemTapped(int index) async {
+    if (index == 3) {
+      // Navigate to sleep questions flow
+      context.push(
+        PremiumCheckScreen.id,
+        extra: await StorageService().checkIfUserIsPremuim(),
+      );
+
+      return;
+    }
     // Check if index is valid for current layout
     if (_isOriginalLayout && index < _originalPages.length) {
       setState(() {
