@@ -7,7 +7,7 @@ import 'package:only_to_do/core/network/api_error_handler.dart';
 import 'package:only_to_do/core/network/api_result.dart';
 import 'package:only_to_do/features/yourevent/services/firebase_service.dart';
 
-import '../../features/informations/data/predict_sleep_quality_request_body.dart';
+import '../../features/sleep_tracking/collect_informations/data/predict_sleep_quality_request_body.dart';
 
 class SleepTrackingService {
   Dio dio;

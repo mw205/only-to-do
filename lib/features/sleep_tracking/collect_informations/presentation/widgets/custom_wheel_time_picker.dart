@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wheel_picker/wheel_picker.dart';
 
-import '../../../../gen/colors.gen.dart';
+import '../../../../../gen/colors.gen.dart';
 
 class CustomWheelTimePicker extends StatefulWidget {
   const CustomWheelTimePicker({super.key, this.onSelectTime});

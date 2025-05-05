@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+
 import '../../../../../core/data/models/daily_tracker_model.dart';
 import '../../cubits/dashboard/dashboard_cubit.dart';
 import '../../cubits/dashboard/dashboard_state.dart';
-import '../../widgets/charts/performance_chart.dart';
 import '../../widgets/charts/habit_tracker_chart.dart';
+import '../../widgets/charts/performance_chart.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -310,6 +311,7 @@ class _DashboardPageState extends State<DashboardPage>
       ),
       child: TabBar(
         controller: _tabController,
+        dividerColor: Colors.transparent,
         indicator: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: Theme.of(context).colorScheme.primary,

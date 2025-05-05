@@ -108,6 +108,10 @@ class $AssetsImagesGen {
   SvgGenImage get sleepScore =>
       const SvgGenImage('assets/images/sleep_score.svg');
 
+  /// File path: assets/images/sleep_score_active.svg
+  SvgGenImage get sleepScoreActive =>
+      const SvgGenImage('assets/images/sleep_score_active.svg');
+
   /// File path: assets/images/sleeping_emoji.png
   AssetGenImage get sleepingEmoji =>
       const AssetGenImage('assets/images/sleeping_emoji.png');
@@ -184,6 +188,7 @@ class $AssetsImagesGen {
         settings,
         skipFilled,
         sleepScore,
+        sleepScoreActive,
         sleepingEmoji,
         sleepingEmoji1,
         someWhat,

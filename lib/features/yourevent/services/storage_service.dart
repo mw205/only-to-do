@@ -82,8 +82,8 @@ class StorageService {
   }
 
   Future<bool?> checkIfUserIsPremuim() async {
-    return _userBox.get('user_name') as bool? ??
-        bool.parse(await _securePrefs.read(key: 'isUserPremuim') as String);
+    return _userBox.get('isUserPremuim') as bool? ??
+        bool.parse(await _securePrefs.read(key: 'isUserPremuim') ?? "false");
   }
 
   // Clear user data
@@ -92,6 +92,7 @@ class StorageService {
     await _securePrefs.delete(key: 'user_id');
     await _securePrefs.delete(key: 'user_email');
     await _securePrefs.delete(key: 'user_name');
+    await _securePrefs.delete(key: 'isUserPremuim');
   }
 
   // POMODORO SETTINGS METHODS
@@ -306,13 +307,13 @@ class StorageService {
   // Save FCM token
   Future<void> saveFcmToken(String token) async {
     await _settingsBox.put('fcm_token', token);
-    await _prefs.setString('fcm_token', token);
+    await _securePrefs.write(key: 'fcm_token', value: token);
   }
 
   // Get FCM token
-  String? getFcmToken() {
+  Future<String?> getFcmToken() async {
     return _settingsBox.get('fcm_token') as String? ??
-        _prefs.getString('fcm_token');
+        await _securePrefs.read(key: 'fcm_token');
   }
 
   // Clear all app settings

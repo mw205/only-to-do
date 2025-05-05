@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:only_to_do/gen/colors.gen.dart';
+
 import '../../../../../core/data/models/event_model.dart';
 import '../../cubits/events/events_cubit.dart';
 import '../../cubits/events/events_state.dart';
@@ -68,8 +70,9 @@ class _EventsListPageState extends State<EventsListPage>
           const SizedBox(height: 16),
           Material(
             child: TabBar(
+              dividerColor: Colors.transparent,
               controller: _tabController,
-              indicatorColor: Colors.black,
+              indicatorColor: ColorName.purple,
               tabs: const [Tab(text: 'Upcoming'), Tab(text: 'All Events')],
             ),
           ),

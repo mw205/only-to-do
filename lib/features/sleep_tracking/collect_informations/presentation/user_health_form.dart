@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:only_to_do/core/widgets/custom_button.dart';
 import 'package:only_to_do/core/widgets/custom_text_form_field.dart';
 
-import '../../../gen/colors.gen.dart';
+import '../../../../gen/colors.gen.dart';
 import '../utils/age_formatter.dart';
 
 class UserHealthForm extends StatefulWidget {

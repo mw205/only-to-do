@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:only_to_do/features/informations/data/question_model.dart';
-import 'package:only_to_do/features/informations/presentation/user_health_form.dart';
-import 'package:only_to_do/features/informations/presentation/widgets/question_step_widget.dart';
+import 'package:only_to_do/features/sleep_tracking/collect_informations/data/question_model.dart';
+import 'package:only_to_do/features/sleep_tracking/collect_informations/presentation/user_health_form.dart';
+import 'package:only_to_do/features/sleep_tracking/collect_informations/presentation/widgets/question_step_widget.dart';
 import 'package:only_to_do/gen/assets.gen.dart';
 import 'package:only_to_do/gen/colors.gen.dart';
 
