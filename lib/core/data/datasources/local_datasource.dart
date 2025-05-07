@@ -6,7 +6,9 @@ import '../models/event_model.dart';
 import '../models/user_model.dart';
 
 class LocalDataSource {
-  final StorageService _storageService = StorageService();
+  final StorageService _storageService;
+
+  LocalDataSource(this._storageService);
 
   // Initialize local storage
   Future<void> init() async {
