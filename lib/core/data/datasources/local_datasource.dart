@@ -1,3 +1,5 @@
+import 'package:only_to_do/features/sleep_tracking/collect_informations/data/models/predict_sleep_quality_request_body.dart';
+
 import '../../../features/yourevent/services/storage_service.dart';
 import '../models/daily_tracker_model.dart';
 import '../models/event_model.dart';
@@ -25,8 +27,8 @@ class LocalDataSource {
     final userId = await _storageService.getUserId();
     final email = await _storageService.getUserEmail();
     final name = await _storageService.getUserName();
-    final isPremuim = await _storageService.checkIfUserIsPremuim();
-    if (userId == null || email == null || name == null || isPremuim == null) {
+    final isPremium = await _storageService.checkIfUserisPremium();
+    if (userId == null || email == null || name == null || isPremium == null) {
       return null;
     }
 
@@ -36,7 +38,7 @@ class LocalDataSource {
       name: name,
       createdAt: DateTime.now(), // Not accurate but just for local use
       updatedAt: DateTime.now(),
-      isPremuim: isPremuim,
+      isPremium: isPremium,
     );
   }
 
@@ -136,8 +138,8 @@ class LocalDataSource {
   }
 
   // Get FCM token
-  String? getFcmToken() {
-    return _storageService.getFcmToken();
+  Future<String?> getFcmToken() async {
+    return await _storageService.getFcmToken();
   }
 
   // Save theme mode
@@ -253,5 +255,14 @@ class LocalDataSource {
       createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt']),
       updatedAt: DateTime.fromMillisecondsSinceEpoch(map['updatedAt']),
     );
+  }
+
+  Future<void> saveSleepData(
+      PredictSleepQualityRequestBody sleepData, double predictionValue) async {
+    await _storageService.saveSleepData(sleepData, predictionValue);
+  }
+
+  Future<PredictSleepQualityRequestBody?> getSleepData() async {
+    return _storageService.getSleepData();
   }
 }

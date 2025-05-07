@@ -59,7 +59,11 @@ class _CustomWheelTimePickerState extends State<CustomWheelTimePicker> {
         ),
       ),
     );
-    Widget itemBuilder(BuildContext context, int index) {
+    Widget hoursBuilder(BuildContext context, int index) {
+      return Text("${index + 1}".padLeft(2, '0'), style: textStyle);
+    }
+
+    Widget minutesBuilder(BuildContext context, int index) {
       return Text("$index".padLeft(2, '0'), style: textStyle);
     }
 
@@ -70,7 +74,8 @@ class _CustomWheelTimePickerState extends State<CustomWheelTimePicker> {
             onIndexChanged: (index, WheelPickerInteractionType type) {
               _handleTimeChange();
             },
-            builder: itemBuilder,
+            builder:
+                wheelController == _hoursWheel ? hoursBuilder : minutesBuilder,
             controller: wheelController,
             looping: wheelController == _minutesWheel,
             style: wheelStyle,
@@ -117,13 +122,23 @@ class _CustomWheelTimePickerState extends State<CustomWheelTimePicker> {
   }
 
   void _handleTimeChange() {
-    Duration duration = Duration(
-      hours: _hoursWheel.selected,
-      minutes: _minutesWheel.selected,
-    );
-    if (_amPmWheel.selected == 1) {
-      duration += const Duration(hours: 12);
+    int hour = _hoursWheel.selected + 1;
+    final int minute = _minutesWheel.selected;
+    final bool isAm = _amPmWheel.selected == 0;
+
+    int hour24;
+    if (isAm) {
+      hour24 = (hour == 12) ? 0 : hour;
+    } else {
+      // PM
+      hour24 = (hour == 12) ? 12 : hour + 12;
     }
+
+    Duration duration = Duration(
+      hours: hour24,
+      minutes: minute,
+    );
+
     widget.onSelectTime?.call(duration);
   }
 }

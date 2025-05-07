@@ -2,18 +2,18 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:only_to_do/core/data/datasources/local_datasource.dart';
 import 'package:only_to_do/core/network/api_call.dart';
 import 'package:only_to_do/core/network/api_error_handler.dart';
 import 'package:only_to_do/core/network/api_result.dart';
 import 'package:only_to_do/features/yourevent/services/firebase_service.dart';
 
-import '../../features/sleep_tracking/collect_informations/data/predict_sleep_quality_request_body.dart';
+import '../models/predict_sleep_quality_request_body.dart';
 
 class SleepTrackingService {
   Dio dio;
-
-  ApiCallsHandler apiCallsHandler;
-  SleepTrackingService({required this.dio, required this.apiCallsHandler});
+  LocalDataSource localDataSource;
+  SleepTrackingService({required this.dio, required this.localDataSource});
 
   /// Retrieves the model URL for the currently logged-in user.
   ///
@@ -41,15 +41,15 @@ class SleepTrackingService {
       );
     } else {
       try {
-        if (await firebaseService.isPremuimUser()) {
-          final docSnapshot = await firebaseService.firestore
-              .collection(dotenv.env['urls_collection']!)
-              .doc(firebaseService.currentUserId)
+        if (await firebaseService.isPremiumUser()) {
+          final docSnapshot = await FirebaseService()
+              .firestore
+              .collection(dotenv.get('urls_collection'))
+              .doc(dotenv.get('docId'))
               .get();
 
           if (docSnapshot.exists) {
-            final modelUrl =
-                docSnapshot.data()?[dotenv.env['model_name']] as String?;
+            final modelUrl = docSnapshot.data()![dotenv.get('model_name')];
             if (modelUrl != null) {
               return ApiResult<String>.success(modelUrl);
             }
@@ -78,15 +78,19 @@ class SleepTrackingService {
     ApiResult<String> result = await getModelUrl();
     return result.when(
       success: (data) {
-        return apiCallsHandler.handler(apiCall: () {
-          return dio.post(
-           data,
-          
-            data: requestBody.toJson(),
-          );
-        }, parser: (data) {
-          return data['predicted_quality_of_sleep'];
-        });
+        return ApiCallsHandler().handler(
+          apiCall: () {
+            return dio.post(
+              data,
+              data: requestBody.toJson(),
+            );
+          },
+          parser: (data) {
+            double predictionValue = data['predicted_quality_of_sleep'];
+            localDataSource.saveSleepData(requestBody, predictionValue);
+            return predictionValue;
+          },
+        );
       },
       failure: (error) {
         return ApiResult.failure(error);

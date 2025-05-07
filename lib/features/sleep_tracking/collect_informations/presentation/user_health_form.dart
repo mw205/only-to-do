@@ -1,16 +1,23 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:only_to_do/core/widgets/custom_button.dart';
 import 'package:only_to_do/core/widgets/custom_text_form_field.dart';
+import 'package:only_to_do/features/sleep_tracking/collect_informations/presentation/widgets/custom_drop_down_form_button.dart';
+import 'package:only_to_do/features/sleep_tracking/core/cubit/sleep_tracking_cubit.dart';
 
-import '../../../../gen/colors.gen.dart';
+import '../data/models/predict_sleep_quality_request_body.dart';
+// (Keep your AgeFormatter if you use it)
 import '../utils/age_formatter.dart';
+import '../utils/sleep_data_utils.dart';
+import 'sleep_prediction_result_page.dart'; // Import the utils
 
 class UserHealthForm extends StatefulWidget {
   const UserHealthForm({super.key});
-
   static const String id = "/user_health_form";
 
   @override
@@ -20,254 +27,275 @@ class UserHealthForm extends StatefulWidget {
 class UserHealthFormState extends State<UserHealthForm> {
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController ageController = TextEditingController();
-  TextEditingController heartRateController = TextEditingController();
-  TextEditingController dailyStepsController = TextEditingController();
-  TextEditingController systolicBPController = TextEditingController();
-  TextEditingController diastolicBPController = TextEditingController();
+  // Controllers for text fields
+  late TextEditingController ageController;
+  late TextEditingController physicalActivityController; // For minutes
+  late TextEditingController heartRateController;
+  late TextEditingController dailyStepsController;
+  late TextEditingController systolicBPController;
+  late TextEditingController diastolicBPController;
 
-  int? age;
-  String? gender;
-  double sleepDuration = 7.0;
-  double physicalActivityLevel = 2.0;
-  double stressLevel = 3.0;
-  String? bmiCategory;
-  int? heartRate;
-  int minDailySteps = 500;
-  int maxDailySteps = 1000;
-  bool hasSleepDisorder = false;
-  int? systolicBP;
-  int? diastolicBP;
+  // State variables for dropdowns and sliders
+  String? genderValue; // 'Male' or 'Female'
+  String? bmiCategoryValue; // 'Underweight', 'Normal', etc.
+
+  PredictSleepQualityRequestBody? _initialRequestBody;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('User Health Form')),
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          padding: EdgeInsets.only(left: 16.w, right: 16.w),
-          children: [
-            const SizedBox(height: 16),
+  void initState() {
+    super.initState();
+    ageController = TextEditingController();
+    physicalActivityController = TextEditingController();
+    heartRateController = TextEditingController();
+    dailyStepsController = TextEditingController();
+    systolicBPController = TextEditingController();
+    diastolicBPController = TextEditingController();
 
-            // Age
-            CustomTextFormField(
-              labelText: 'Age',
-              prefixIcon: Icons.calendar_today,
-              controller: ageController,
-              keyboardType: TextInputType.number,
-              formatters: [AgeFormatter()],
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your age';
-                }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final cubit = context.read<SleepTrackingCubit>();
+      if (cubit.requestBody != null) {
+        setState(() {
+          _initialRequestBody = cubit.requestBody;
+        });
+      } else {
+        _initialRequestBody = PredictSleepQualityRequestBody(
+            age: 0,
+            gender: 0,
+            sleepDuration: 0,
+            physicalActivityLevel: 0,
+            stressLevel: 5,
+            bmiCategory: 1,
+            heartRate: 0,
+            dailySteps: 0,
+            sleepDisorder: 0,
+            systolicBP: 0,
+            diastolicBP: 0); // Create a default to prevent null errors
+      }
+    });
+  }
 
-                if (int.tryParse(value) != null && int.parse(value) < 8) {
-                  return 'Anyone over 8 years old please enter your age';
-                }
-                return null;
-              },
-            ),
-
-            CustomDropDownFormButton<String>(
-              label: "Gender",
-              items: ['Male', 'Female'],
-              onChanged: (value) => gender = value,
-              prefixIcon: Icon(Icons.person),
-              validator: (value) =>
-                  value == null ? 'Please select your gender' : null,
-            ),
-            const SizedBox(height: 16),
-
-            // Physical Activity Level
-
-            // BMI Category
-            CustomDropDownFormButton<String>(
-              label: 'BMI Category',
-              items: ['Underweight', 'Normal', 'Overweight', 'Obese'],
-              onChanged: (value) => gender = value,
-              prefixIcon: Icon(Icons.scale),
-              validator: (value) =>
-                  value == null ? 'Please select your BMI category' : null,
-            ),
-
-            const SizedBox(height: 16),
-
-            CustomTextFormField(
-              prefixIcon: Icons.favorite,
-              controller: heartRateController,
-              labelText: "Heart Rate (bpm)",
-              keyboardType: TextInputType.number,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Heart rate is required';
-                }
-                final hr = int.tryParse(value);
-                if (hr == null) return 'Invalid number';
-                if (hr < 30 || hr > 200) {
-                  return 'Heart rate should be between 30 and 200';
-                }
-                return null;
-              },
-            ),
-            CustomTextFormField(
-              controller: systolicBPController,
-              labelText: 'Systolic BP (mmHg)',
-              prefixIcon: Icons.bloodtype,
-              keyboardType: TextInputType.number,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Systolic BP is required';
-                }
-                final sbp = int.tryParse(value);
-                if (sbp == null) return 'Invalid number';
-                if (sbp < 70 || sbp > 250) {
-                  return 'Enter a value between 70 and 250';
-                }
-                return null;
-              },
-            ),
-            CustomTextFormField(
-              controller: systolicBPController,
-              labelText: 'Diastolic BP (mmHg)',
-              prefixIcon: Icons.bloodtype,
-              keyboardType: TextInputType.number,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Diastolic BP is required';
-                }
-                final dbp = int.tryParse(value);
-                if (dbp == null) return 'Invalid number';
-                if (dbp < 40 || dbp > 150) {
-                  return 'Enter a value between 40 and 150';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 16),
-            Text('Daily Steps range: '),
-            RangeSlider(
-              values: RangeValues(
-                  minDailySteps.toDouble(), maxDailySteps.toDouble()),
-              min: 500,
-              max: 10000,
-              divisions: 10,
-              labels: RangeLabels(
-                  minDailySteps.toString(), maxDailySteps.toString()),
-              onChanged: (value) => setState(() {
-                minDailySteps = value.start.ceil();
-                maxDailySteps = value.end.ceil();
-              }),
-            ),
-            // Blood Pressure
-            const SizedBox(height: 16),
-
-            Text(
-                'Physical Activity Level: ${physicalActivityLevel.toStringAsFixed(1)}'),
-            Slider(
-              value: physicalActivityLevel,
-              min: 1.0,
-              max: 5.0,
-              divisions: 4,
-              inactiveColor: ColorName.purple.withValues(alpha: 0.2),
-              label: physicalActivityLevel.toStringAsFixed(1),
-              onChanged: (value) =>
-                  setState(() => physicalActivityLevel = value),
-            ),
-            const SizedBox(height: 16),
-
-            // Stress Level
-            Text('Stress Level: ${stressLevel.toStringAsFixed(1)}'),
-            Slider(
-              inactiveColor: ColorName.purple.withValues(alpha: 0.2),
-              value: stressLevel,
-              min: 1.0,
-              max: 5.0,
-              divisions: 4,
-              label: stressLevel.toStringAsFixed(1),
-              onChanged: (value) => setState(() => stressLevel = value),
-            ),
-            const SizedBox(height: 16),
-
-            CustomButton(
-              onPressed: _submitForm,
-              buttonText: 'Submit',
-            )
-          ],
-        ),
-      ),
-    );
+  @override
+  void dispose() {
+    ageController.dispose();
+    physicalActivityController.dispose();
+    heartRateController.dispose();
+    dailyStepsController.dispose();
+    systolicBPController.dispose();
+    diastolicBPController.dispose();
+    super.dispose();
   }
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      // Process the collected data
-      log(
-        {
-          'Age': age,
-          'Gender': gender,
-          'Sleep Duration': sleepDuration,
-          'Physical Activity Level': physicalActivityLevel,
-          'Stress Level': stressLevel,
-          'BMI Category': bmiCategory,
-          'Heart Rate': heartRate,
-          'Daily Steps': minDailySteps,
-          'Sleep Disorder': hasSleepDisorder,
-          'Systolic BP': systolicBP,
-          'Diastolic BP': diastolicBP,
-        }.toString(),
+      _formKey.currentState!.save(); // Important if using FormField onSaved
+
+      if (_initialRequestBody == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content:
+                  Text('Error: Cannot submit form. Please restart the flow.')),
+        );
+        return;
+      }
+
+      final cubit = context.read<SleepTrackingCubit>();
+
+      final updatedRequestBody = _initialRequestBody!.copyWith(
+        age: int.tryParse(ageController.text) ?? _initialRequestBody!.age,
+        gender: SleepDataUtils.mapGenderStringToInt(genderValue),
+        physicalActivityLevel:
+            double.tryParse(physicalActivityController.text) ??
+                _initialRequestBody!.physicalActivityLevel,
+        bmiCategory: SleepDataUtils.mapBmiCategoryStringToInt(bmiCategoryValue),
+        heartRate: int.tryParse(heartRateController.text) ??
+            _initialRequestBody!.heartRate,
+        dailySteps: int.tryParse(dailyStepsController.text) ??
+            _initialRequestBody!.dailySteps,
+        systolicBP: int.tryParse(systolicBPController.text) ??
+            _initialRequestBody!.systolicBP,
+        diastolicBP: int.tryParse(diastolicBPController.text) ??
+            _initialRequestBody!.diastolicBP,
       );
+
+      cubit.updateRequestBody(updatedRequestBody);
+      cubit.predictSleepQuality();
+
+      log('Final Request Body: ${updatedRequestBody.toJson()}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('Health data submitted! Predicting quality...')),
+      );
+      context.push(SleepPredictionResultPage.id);
     }
   }
-}
 
-class CustomDropDownFormButton<T> extends StatelessWidget {
-  const CustomDropDownFormButton({
-    super.key,
-    required this.label,
-    required this.prefixIcon,
-    required this.items,
-    this.onChanged,
-    this.validator,
-  });
-  final String label;
-  final Widget prefixIcon;
-
-  final List<T> items;
-  final void Function(T?)? onChanged;
-  final String? Function(T?)? validator;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: ColorName.greyBar,
-        borderRadius: BorderRadius.circular(16.r),
-      ),
-      child: DropdownButtonFormField<T>(
-        decoration: InputDecoration(
-          errorStyle: TextStyle(fontSize: 0),
-          labelText: label,
-          border: InputBorder.none,
-          prefixIcon: prefixIcon,
-        ),
-        icon: Padding(
-          padding: EdgeInsetsDirectional.only(
-            bottom: 24,
-            end: 16,
-            top: 0,
-          ),
-          child: const Icon(Icons.keyboard_arrow_down_outlined),
-        ),
-        items: items
-            .map((value) => DropdownMenuItem<T>(
-                  value: value,
-                  child: Text(value.toString()),
-                ))
-            .toList(),
-        onChanged: onChanged,
-        validator: validator,
-      ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Your Health Details')),
+      body: _initialRequestBody == null
+          ? const Center(
+              child:
+                  CircularProgressIndicator()) // Show loading if initial data not ready
+          : Form(
+              key: _formKey,
+              child: ListView(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+                children: [
+                  CustomTextFormField(
+                    labelText: 'Age',
+                    prefixIcon: Icons.calendar_today,
+                    controller: ageController,
+                    keyboardType: TextInputType.number,
+                    formatters: [
+                      AgeFormatter(),
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your age';
+                      }
+                      final age = int.tryParse(value);
+                      if (age == null) return 'Invalid age';
+                      if (age < 8 || age > 120) {
+                        return 'Age must be between 8 and 120';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 16.h),
+                  CustomDropDownFormButton<String>(
+                    label: "Gender",
+                    value: genderValue,
+                    items: const ['Male', 'Female'],
+                    onChanged: (value) => setState(() => genderValue = value),
+                    prefixIcon: const Icon(Icons.person),
+                    validator: (value) =>
+                        value == null ? 'Please select your gender' : null,
+                  ),
+                  SizedBox(height: 16.h),
+                  CustomTextFormField(
+                    labelText: 'Physical Activity Level (minutes/day)',
+                    prefixIcon: Icons.fitness_center,
+                    controller: physicalActivityController,
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    formatters: [
+                      FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d+\.?\d{0,1}'))
+                    ],
+                    validator: (value) {
+                      if (value == null || value.isEmpty) return 'Required';
+                      final level = double.tryParse(value);
+                      if (level == null) return 'Invalid number';
+                      if (level < 0 || level > 1440) {
+                        return 'Minutes must be 0-1440'; // Max 24 hours
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 16.h),
+                  CustomDropDownFormButton<String>(
+                    label: 'BMI Category',
+                    value: bmiCategoryValue,
+                    items: const [
+                      'Underweight',
+                      'Normal',
+                      'Overweight',
+                      'Obese'
+                    ],
+                    onChanged: (value) =>
+                        setState(() => bmiCategoryValue = value),
+                    prefixIcon: const Icon(Icons.scale),
+                    validator: (value) => value == null
+                        ? 'Please select your BMI category'
+                        : null,
+                  ),
+                  SizedBox(height: 16.h),
+                  CustomTextFormField(
+                    prefixIcon: Icons.favorite,
+                    controller: heartRateController,
+                    labelText: "Heart Rate (bpm)",
+                    keyboardType: TextInputType.number,
+                    formatters: [FilteringTextInputFormatter.digitsOnly],
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Heart rate is required';
+                      }
+                      final hr = int.tryParse(value);
+                      if (hr == null) return 'Invalid number';
+                      if (hr < 30 || hr > 220) {
+                        return 'Heart rate should be 30-220';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 16.h),
+                  CustomTextFormField(
+                    labelText: 'Daily Steps',
+                    prefixIcon: Icons.directions_walk,
+                    controller: dailyStepsController,
+                    keyboardType: TextInputType.number,
+                    formatters: [FilteringTextInputFormatter.digitsOnly],
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Daily steps are required';
+                      }
+                      final steps = int.tryParse(value);
+                      if (steps == null) return 'Invalid number';
+                      if (steps < 0 || steps > 50000) {
+                        return 'Steps should be 0-50000';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 16.h),
+                  CustomTextFormField(
+                    controller: systolicBPController,
+                    labelText: 'Systolic BP (mmHg)',
+                    prefixIcon: Icons.bloodtype,
+                    keyboardType: TextInputType.number,
+                    formatters: [FilteringTextInputFormatter.digitsOnly],
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Systolic BP is required';
+                      }
+                      final sbp = int.tryParse(value);
+                      if (sbp == null) return 'Invalid number';
+                      if (sbp < 70 || sbp > 250) {
+                        return 'Enter a value between 70 and 250';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 16.h),
+                  CustomTextFormField(
+                    controller: diastolicBPController, // Corrected controller
+                    labelText: 'Diastolic BP (mmHg)',
+                    prefixIcon: Icons.bloodtype_outlined,
+                    keyboardType: TextInputType.number,
+                    formatters: [FilteringTextInputFormatter.digitsOnly],
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Diastolic BP is required';
+                      }
+                      final dbp = int.tryParse(value);
+                      if (dbp == null) return 'Invalid number';
+                      if (dbp < 40 || dbp > 150) {
+                        return 'Enter a value between 40 and 150';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 24.h),
+                  CustomButton(
+                    onPressed: _submitForm,
+                    buttonText: 'Get Sleep Quality Prediction',
+                  ),
+                  SizedBox(height: 20.h),
+                ],
+              ),
+            ),
     );
   }
 }

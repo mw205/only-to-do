@@ -58,7 +58,7 @@ class AuthRepository {
           name: email.split('@')[0],
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
-          isPremuim: false,
+          isPremium: false,
         );
 
         await _usersCollection
@@ -101,7 +101,7 @@ class AuthRepository {
 
       // Create user document in Firestore
       final newUser = UserModel(
-        isPremuim: false,
+        isPremium: false,
         id: userCredential.user!.uid,
         email: email,
         name: name,
