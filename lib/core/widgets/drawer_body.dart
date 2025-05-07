@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:only_to_do/core/styles/app_box_decorations.dart';
 import 'package:only_to_do/core/styles/app_text_styles.dart';
+import 'package:only_to_do/features/profile/presentation/pages/profile_screen.dart';
 import 'package:only_to_do/gen/assets.gen.dart';
 import 'package:only_to_do/gen/colors.gen.dart';
 
@@ -101,8 +102,7 @@ class DrawerBody extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              padding:
-                  EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
               decoration: AppBoxDecorations.pomodoroTaskDecoration,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -128,7 +128,9 @@ class DrawerBody extends StatelessWidget {
               color: Colors.black,
             ),
             title: const Text('Settings'),
-            onTap: () {},
+            onTap: () {
+              context.push(ProfileScreen.id);
+            },
           ),
         ],
       ),
