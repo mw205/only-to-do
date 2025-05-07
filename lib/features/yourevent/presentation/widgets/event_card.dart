@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/data/models/event_model.dart';
 import 'countdown_timer.dart';
@@ -50,7 +51,7 @@ class EventCard extends StatelessWidget {
               child: Row(
                 children: [
                   Icon(_getIconData(event.icon), color: eventColor, size: 30),
-                  const SizedBox(width: 16),
+                  const Gap(16),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,7 +65,7 @@ class EventCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        const SizedBox(height: 4),
+                        const Gap(4),
                         Text(
                           DateFormat(
                             'MMM dd, yyyy - h:mm a',
@@ -102,7 +103,7 @@ class EventCard extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 12),
+                    const Gap(12),
                   ],
                   if (!isExpired && !event.isCompleted)
                     CountdownTimer(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:only_to_do/core/styles/app_text_styles.dart';
 import 'package:only_to_do/gen/colors.gen.dart';
 
@@ -20,7 +21,7 @@ class _RepeatEveryWidgetState extends State<RepeatEveryWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 8),
+        const Gap(8),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -55,7 +56,7 @@ class _RepeatEveryWidgetState extends State<RepeatEveryWidget> {
                 },
               ),
             ),
-            SizedBox(width: 12.sp),
+            Gap(12.sp),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               decoration: BoxDecoration(

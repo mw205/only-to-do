@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class SleepScreen extends StatelessWidget {
   const SleepScreen({super.key});
@@ -57,7 +58,7 @@ class SleepScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
+              const Gap(30),
 
               // Sleep Cycle Display
               Center(
@@ -107,7 +108,7 @@ class SleepScreen extends StatelessWidget {
                         children: [
                           Icon(Icons.nightlight_round,
                               color: Color(0xFFE063FF), size: 30), // Moon icon
-                          SizedBox(height: 8),
+                          Gap(8),
                           Text(
                             '6Hr',
                             style: TextStyle(
@@ -145,7 +146,7 @@ class SleepScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 25),
+              const Gap(25),
 
               // Start Sleep Button
               Center(
@@ -171,7 +172,7 @@ class SleepScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 30),
+              const Gap(30),
 
               // Bed time, Alarm, Siesta Row
               Padding(
@@ -189,7 +190,7 @@ class SleepScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 30),
+              const Gap(30),
 
               // Sleeping Tips Section
               const Text(
@@ -199,7 +200,7 @@ class SleepScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),
-              const SizedBox(height: 10),
+              const Gap(10),
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -226,7 +227,7 @@ class SleepScreen extends StatelessWidget {
                                 color: Colors.white70,
                                 height: 1.4),
                           ),
-                          const SizedBox(height: 10),
+                          const Gap(10),
                           TextButton(
                             onPressed: () {
                               // TODO: Implement "Find out" functionality
@@ -248,7 +249,7 @@ class SleepScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(width: 10),
+                    const Gap(10),
                     // Placeholder for the image in the card
                     // In a real app, you'd use an Image.asset or Image.network
                     // For simplicity, using a colored container or an icon
@@ -318,12 +319,12 @@ class SleepScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold))
             else
               Icon(icon, color: iconColor, size: 20),
-            const SizedBox(width: 5),
+            const Gap(5),
             Text(title,
                 style: const TextStyle(fontSize: 14, color: Colors.white70)),
           ],
         ),
-        const SizedBox(height: 4),
+        const Gap(4),
         Text(subtitle,
             style: const TextStyle(
                 fontSize: 16,

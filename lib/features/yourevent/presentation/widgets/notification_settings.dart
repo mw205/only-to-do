@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class NotificationSettings extends StatefulWidget {
   final bool enableEventReminders;
@@ -39,19 +40,19 @@ class _NotificationSettingsState extends State<NotificationSettings> {
                   Icons.notifications,
                   color: Theme.of(context).colorScheme.primary,
                 ),
-                const SizedBox(width: 8),
+                const Gap(8),
                 const Text(
                   'Notification Settings',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const Gap(16),
             const Text(
               'Configure which notifications you want to receive:',
               style: TextStyle(color: Colors.grey),
             ),
-            const SizedBox(height: 16),
+            const Gap(16),
 
             // Event reminders
             SwitchListTile(
@@ -87,7 +88,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
               contentPadding: EdgeInsets.zero,
             ),
 
-            const SizedBox(height: 8),
+            const Gap(8),
 
             // Help text
             Text(

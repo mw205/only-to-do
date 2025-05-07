@@ -54,12 +54,12 @@ class _PredictionResultViewState extends State<PredictionResultView>
               'Your Results are here 🎉',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 16),
+            const Gap(16),
             const Text(
               'Your predicted sleep quality is:',
               style: TextStyle(fontSize: 18),
             ),
-            const SizedBox(height: 24),
+            const Gap(24),
             AnimatedBuilder(
               builder: (context, child) {
                 return SizedBox(

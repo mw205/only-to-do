@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+
 import '../cubit/pomodoro_cubit.dart';
 import '../cubit/pomodoro_state.dart';
 
@@ -124,7 +126,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
                 },
               ),
 
-              const SizedBox(height: 32),
+              const Gap(32),
 
               // Save Button
               ElevatedButton(
@@ -207,7 +209,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
             ),
           ),
         ),
-        const SizedBox(height: 8),
+        const Gap(8),
       ],
     );
   }
@@ -215,12 +217,12 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
   // Save settings
   void _saveSettings() {
     context.read<PomodoroCubit>().saveSettings(
-      focusDuration: _focusDuration,
-      shortBreakDuration: _shortBreakDuration,
-      longBreakDuration: _longBreakDuration,
-      longBreakAfter: _longBreakAfter,
-      targetSessions: _targetSessions,
-    );
+          focusDuration: _focusDuration,
+          shortBreakDuration: _shortBreakDuration,
+          longBreakDuration: _longBreakDuration,
+          longBreakAfter: _longBreakAfter,
+          targetSessions: _targetSessions,
+        );
 
     Navigator.pop(context);
     ScaffoldMessenger.of(

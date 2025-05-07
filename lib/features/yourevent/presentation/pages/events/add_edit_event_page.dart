@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
@@ -253,7 +254,7 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
                 return null;
               },
             ),
-            const SizedBox(height: 16),
+            const Gap(16),
             TextFormField(
               controller: _descriptionController,
               decoration: const InputDecoration(
@@ -263,7 +264,7 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
               ),
               maxLines: 3,
             ),
-            const SizedBox(height: 24),
+            const Gap(24),
             Card(
               elevation: 2,
               child: Padding(
@@ -278,7 +279,7 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const Gap(16),
                     Row(
                       children: [
                         Expanded(
@@ -296,7 +297,7 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
                             ),
                           ),
                         ),
-                        const SizedBox(width: 16),
+                        const Gap(16),
                         Expanded(
                           child: InkWell(
                             onTap: () => _selectTime(context),
@@ -316,7 +317,7 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+            const Gap(24),
             Card(
               elevation: 2,
               child: Padding(
@@ -340,7 +341,7 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
+                    const Gap(8),
                     if (_reminderTimes.isEmpty)
                       const Padding(
                         padding: EdgeInsets.symmetric(vertical: 8),
@@ -374,7 +375,7 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+            const Gap(24),
             Card(
               elevation: 2,
               child: Padding(
@@ -389,12 +390,12 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const Gap(16),
                     const Text(
                       'Event Color',
                       style: TextStyle(fontWeight: FontWeight.w500),
                     ),
-                    const SizedBox(height: 8),
+                    const Gap(8),
                     Wrap(
                       spacing: 8,
                       children: _colorOptions.map((color) {
@@ -419,12 +420,12 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
                         );
                       }).toList(),
                     ),
-                    const SizedBox(height: 16),
+                    const Gap(16),
                     const Text(
                       'Event Icon',
                       style: TextStyle(fontWeight: FontWeight.w500),
                     ),
-                    const SizedBox(height: 8),
+                    const Gap(8),
                     Wrap(
                       spacing: 8,
                       runSpacing: 8,
@@ -465,7 +466,7 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
                                       ? Color(colorValue)
                                       : Colors.grey[600],
                                 ),
-                                const SizedBox(width: 4),
+                                const Gap(4),
                                 Text(
                                   icon['name'],
                                   style: TextStyle(
@@ -484,7 +485,7 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
                 ),
               ),
             ),
-            const SizedBox(height: 32),
+            const Gap(32),
             ElevatedButton(
               onPressed: _isLoading ? null : _saveEvent,
               style: ElevatedButton.styleFrom(
@@ -516,7 +517,7 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text('Remind me before the event:'),
-              const SizedBox(height: 16),
+              const Gap(16),
               Row(
                 children: [
                   Expanded(
@@ -543,7 +544,7 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  const Gap(16),
                   Expanded(
                     child: DropdownButtonFormField<String>(
                       value: reminderUnit,

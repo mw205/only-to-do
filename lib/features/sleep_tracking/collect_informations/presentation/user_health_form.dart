@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:only_to_do/core/widgets/custom_button.dart';
 import 'package:only_to_do/core/widgets/custom_text_form_field.dart';
@@ -163,7 +164,7 @@ class UserHealthFormState extends State<UserHealthForm> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 16.h),
+                  Gap(16.h),
                   CustomDropDownFormButton<String>(
                     label: "Gender",
                     value: genderValue,
@@ -173,7 +174,7 @@ class UserHealthFormState extends State<UserHealthForm> {
                     validator: (value) =>
                         value == null ? 'Please select your gender' : null,
                   ),
-                  SizedBox(height: 16.h),
+                  Gap(16.h),
                   CustomTextFormField(
                     labelText: 'Physical Activity Level (minutes/day)',
                     prefixIcon: Icons.fitness_center,
@@ -194,7 +195,7 @@ class UserHealthFormState extends State<UserHealthForm> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 16.h),
+                  Gap(16.h),
                   CustomDropDownFormButton<String>(
                     label: 'BMI Category',
                     value: bmiCategoryValue,
@@ -211,7 +212,7 @@ class UserHealthFormState extends State<UserHealthForm> {
                         ? 'Please select your BMI category'
                         : null,
                   ),
-                  SizedBox(height: 16.h),
+                  Gap(16.h),
                   CustomTextFormField(
                     prefixIcon: Icons.favorite,
                     controller: heartRateController,
@@ -230,7 +231,7 @@ class UserHealthFormState extends State<UserHealthForm> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 16.h),
+                  Gap(16.h),
                   CustomTextFormField(
                     labelText: 'Daily Steps',
                     prefixIcon: Icons.directions_walk,
@@ -249,7 +250,7 @@ class UserHealthFormState extends State<UserHealthForm> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 16.h),
+                  Gap(16.h),
                   CustomTextFormField(
                     controller: systolicBPController,
                     labelText: 'Systolic BP (mmHg)',
@@ -268,7 +269,7 @@ class UserHealthFormState extends State<UserHealthForm> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 16.h),
+                  Gap(16.h),
                   CustomTextFormField(
                     controller: diastolicBPController, // Corrected controller
                     labelText: 'Diastolic BP (mmHg)',
@@ -287,12 +288,12 @@ class UserHealthFormState extends State<UserHealthForm> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 24.h),
+                  Gap(24.h),
                   CustomButton(
                     onPressed: _submitForm,
                     buttonText: 'Get Sleep Quality Prediction',
                   ),
-                  SizedBox(height: 20.h),
+                  Gap(20.h),
                 ],
               ),
             ),

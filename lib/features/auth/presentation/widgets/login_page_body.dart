@@ -64,7 +64,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                   ).textTheme.bodyLarge?.copyWith(color: Colors.grey[600]),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 32),
+                const Gap(32),
 
                 // Login form
                 LoginForm(

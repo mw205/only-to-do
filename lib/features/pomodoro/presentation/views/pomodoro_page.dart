@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:gap/gap.dart';
 
 import '../cubit/pomodoro_cubit.dart';
 import '../cubit/pomodoro_state.dart';
@@ -49,7 +50,7 @@ class PomodoroPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 24),
+                      const Gap(24),
                       CircularPercentIndicator(
                         radius: 130,
                         lineWidth: 15,
@@ -57,7 +58,7 @@ class PomodoroPage extends StatelessWidget {
                         center: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(height: 20),
+                            Gap(20),
                             Text(
                               _formatTime(state.remainingSeconds),
                               style: const TextStyle(
@@ -88,7 +89,7 @@ class PomodoroPage extends StatelessWidget {
                         animation: true,
                         animateFromLastPercent: true,
                       ),
-                      const SizedBox(height: 40),
+                      const Gap(40),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -98,7 +99,7 @@ class PomodoroPage extends StatelessWidget {
                             onPressed: () =>
                                 context.read<PomodoroCubit>().reset(),
                           ),
-                          const SizedBox(width: 24),
+                          const Gap(24),
                           FloatingActionButton(
                             onPressed: () {
                               if (state.status == PomodoroStatus.running) {
@@ -114,7 +115,7 @@ class PomodoroPage extends StatelessWidget {
                               size: 32,
                             ),
                           ),
-                          const SizedBox(width: 24),
+                          const Gap(24),
                           IconButton(
                             icon: const Icon(Icons.skip_next),
                             iconSize: 32,
@@ -141,9 +142,9 @@ class PomodoroPage extends StatelessWidget {
                         color: Colors.grey[700],
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const Gap(8),
                     _buildSessionIndicators(context, state),
-                    const SizedBox(height: 24),
+                    const Gap(24),
                   ],
                 ),
               ),

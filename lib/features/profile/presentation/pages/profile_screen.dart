@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -35,13 +36,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     fontSize: 24,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const Gap(10),
                 CircleAvatar(
                   radius: 45,
                   backgroundColor: const Color.fromARGB(255, 0, 0, 0),
                   child: Text("👋", style: TextStyle(fontSize: 40)),
                 ),
-                const SizedBox(height: 8),
+                const Gap(8),
                 const Text(
                   "Lujyy",
                   style: TextStyle(
@@ -79,7 +80,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                     onTap: () {},
                   ),
-                  SizedBox(height: 10),
+                  Gap(10),
                   buildSwitchTile("Alarm", Icons.alarm, alarm, (val) {
                     setState(() => alarm = val);
                   }),

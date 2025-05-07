@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import '../../../../../core/data/models/event_model.dart';
 import '../../cubits/events/events_cubit.dart';
@@ -445,7 +446,7 @@ class _CalendarPageState extends State<CalendarPage>
               ],
             ),
 
-            const SizedBox(height: 20),
+            const Gap(20),
 
             // Today section
             const Text(
@@ -453,7 +454,7 @@ class _CalendarPageState extends State<CalendarPage>
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
 
-            const SizedBox(height: 12),
+            const Gap(12),
 
             // Sample tasks to match screenshot
             ...sampleTasks.map((task) => _buildTaskItem(task)),
@@ -466,7 +467,7 @@ class _CalendarPageState extends State<CalendarPage>
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
 
-            const SizedBox(height: 12),
+            const Gap(12),
 
             // Assignable tasks
             _buildAssignableTaskItem('Bake a cake'),

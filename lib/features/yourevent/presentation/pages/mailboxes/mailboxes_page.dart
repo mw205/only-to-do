@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import '../../../../../core/data/models/event_model.dart';
 import '../../cubits/events/events_cubit.dart';
 import '../../cubits/events/events_state.dart';
@@ -126,7 +127,7 @@ class _MailboxesPageState extends State<MailboxesPage> {
                 () => _showTasksDialog('Today', _todayTasks),
               ),
 
-              const SizedBox(height: 8),
+              const Gap(8),
 
               // Upcoming section
               _buildCategoryHeader(context, 'Upcoming', _upcomingTasks.length),
@@ -139,9 +140,9 @@ class _MailboxesPageState extends State<MailboxesPage> {
                 () => _showTasksDialog('Upcoming', _upcomingTasks),
               ),
 
-              const SizedBox(height: 16),
+              const Gap(16),
               const Divider(),
-              const SizedBox(height: 16),
+              const Gap(16),
 
               // Categories section
               _buildCategoryHeader(context, 'Categories', _allTasks.length),
@@ -173,9 +174,9 @@ class _MailboxesPageState extends State<MailboxesPage> {
                 () => _showTasksDialog('Fun', _funTasks),
               ),
 
-              const SizedBox(height: 16),
+              const Gap(16),
               const Divider(),
-              const SizedBox(height: 16),
+              const Gap(16),
 
               // Settings
               _buildMailboxItem(

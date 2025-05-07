@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../../core/data/models/daily_tracker_model.dart';
@@ -65,7 +66,7 @@ class PerformanceChart extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const Gap(4),
                   Text(
                     subtitle,
                     style: TextStyle(fontSize: 12, color: Colors.grey[600]),
@@ -92,7 +93,7 @@ class PerformanceChart extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: 16),
+          const Gap(16),
           Expanded(
             child: trackers.isEmpty
                 ? Center(
@@ -159,7 +160,7 @@ class PerformanceChart extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(width: 8),
+                      const Gap(8),
                       // Habit grid
                       Expanded(
                         child: GridView.builder(
@@ -256,7 +257,7 @@ class PerformanceChart extends StatelessWidget {
                     ],
                   ),
           ),
-          const SizedBox(height: 16),
+          const Gap(16),
           Expanded(
             child: trackers.length < 2
                 ? Center(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:only_to_do/gen/colors.gen.dart';
 
 import '../../../../../core/data/models/event_model.dart';
@@ -67,7 +68,7 @@ class _EventsListPageState extends State<EventsListPage>
     return Scaffold(
       body: Column(
         children: [
-          const SizedBox(height: 16),
+          const Gap(16),
           Material(
             child: TabBar(
               dividerColor: Colors.transparent,
@@ -107,7 +108,7 @@ class _EventsListPageState extends State<EventsListPage>
                           size: 80,
                           color: Colors.grey[400],
                         ),
-                        const SizedBox(height: 16),
+                        const Gap(16),
                         Text(
                           _showUpcomingOnly
                               ? 'No upcoming events'
@@ -117,7 +118,7 @@ class _EventsListPageState extends State<EventsListPage>
                             color: Colors.grey,
                           ),
                         ),
-                        const SizedBox(height: 24),
+                        const Gap(24),
                         ElevatedButton(
                           onPressed: () => _navigateToAddEvent(context),
                           child: const Text('Add New Event'),

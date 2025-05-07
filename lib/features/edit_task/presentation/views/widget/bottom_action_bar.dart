@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:only_to_do/gen/assets.gen.dart';
 import 'package:only_to_do/gen/colors.gen.dart';
 
@@ -28,17 +29,17 @@ class BottomActionsBar extends StatelessWidget {
               Assets.images.calendar.svg(
                   width: 24.w,
                   colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn)),
-              SizedBox(width: 12),
+              Gap(12),
               Assets.images.clock.svg(
                 width: 24.w,
                 colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
               ),
-              SizedBox(width: 12),
+              Gap(12),
               Assets.images.tag.svg(
                 colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
                 width: 24.w,
               ),
-              SizedBox(width: 12),
+              Gap(12),
               Assets.images.sleepScore.svg(
                 colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
                 width: 24.w,
@@ -68,7 +69,7 @@ class BottomActionsBar extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                SizedBox(width: 8.w),
+                Gap(8.w),
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(

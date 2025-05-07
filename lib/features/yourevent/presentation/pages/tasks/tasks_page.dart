@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import '../../../../../core/data/models/event_model.dart';
 import '../../cubits/events/events_cubit.dart';
 import '../../cubits/events/events_state.dart';
@@ -96,7 +97,7 @@ class _TasksPageState extends State<TasksPage>
           }
 
           return SafeArea(
-            child: Column(children: [SizedBox(height: 16), _buildTasksList()]),
+            child: Column(children: [Gap(16), _buildTasksList()]),
           );
         },
       ),
@@ -197,7 +198,7 @@ class _TasksPageState extends State<TasksPage>
                     shape: BoxShape.circle,
                   ),
                 ),
-                const SizedBox(width: 16),
+                const Gap(16),
                 // Task content
                 Expanded(
                   child: Column(
