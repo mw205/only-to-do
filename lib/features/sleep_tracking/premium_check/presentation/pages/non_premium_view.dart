@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:only_to_do/core/widgets/custom_button.dart';
 
 import 'in_app_purchase_screen.dart';
 
@@ -28,7 +29,7 @@ class NonPremiumView extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const Gap(32),
-            ElevatedButton(
+            CustomButton(
               onPressed: () {
                 showModalBottomSheet<void>(
                   context: context,
@@ -42,8 +43,8 @@ class NonPremiumView extends StatelessWidget {
                   },
                 );
               },
-              child: const Text('Upgrade for \$5'),
-            ),
+              buttonText: 'Upgrade for \$5',
+            )
           ],
         ),
       ),

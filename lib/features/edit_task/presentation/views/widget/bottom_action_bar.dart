@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:only_to_do/core/widgets/custom_button.dart';
 import 'package:only_to_do/gen/assets.gen.dart';
-import 'package:only_to_do/gen/colors.gen.dart';
 
 class BottomActionsBar extends StatelessWidget {
   const BottomActionsBar({super.key});
@@ -70,23 +70,7 @@ class BottomActionsBar extends StatelessWidget {
                   ),
                 ),
                 Gap(8.w),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.sp),
-                    ),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.w),
-                    minimumSize: Size(0, 40.w),
-                  ),
-                  child: const Text(
-                    'Save task',
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: ColorName.white),
-                  ),
-                ),
+                CustomButton(onPressed: () {}, buttonText: 'Save task'),
               ],
             ),
           ),

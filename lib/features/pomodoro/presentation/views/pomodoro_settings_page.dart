@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:only_to_do/core/widgets/custom_button.dart';
 
 import '../cubit/pomodoro_cubit.dart';
 import '../cubit/pomodoro_state.dart';
@@ -127,17 +128,9 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
               ),
 
               const Gap(32),
-
-              // Save Button
-              ElevatedButton(
+              CustomButton(
                 onPressed: _saveSettings,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                ),
-                child: const Text(
-                  'Save Settings',
-                  style: TextStyle(fontSize: 16),
-                ),
+                buttonText: 'Save Settings',
               ),
             ],
           );

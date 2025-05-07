@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:only_to_do/core/widgets/custom_button.dart';
 import 'package:only_to_do/gen/colors.gen.dart';
 
 import '../../../../../core/data/models/event_model.dart';
@@ -119,9 +120,9 @@ class _EventsListPageState extends State<EventsListPage>
                           ),
                         ),
                         const Gap(24),
-                        ElevatedButton(
+                        CustomButton(
                           onPressed: () => _navigateToAddEvent(context),
-                          child: const Text('Add New Event'),
+                          buttonText: 'Add New Event',
                         ),
                       ],
                     ),

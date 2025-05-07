@@ -3,9 +3,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+import 'package:only_to_do/core/widgets/custom_button.dart';
+import 'package:only_to_do/gen/colors.gen.dart';
 import 'package:share_plus/share_plus.dart';
+
 import '../../../../../core/data/models/event_model.dart';
 import '../../cubits/events/events_cubit.dart';
 import '../../widgets/countdown_timer.dart';
@@ -314,14 +318,24 @@ class EventDetailsPage extends StatelessWidget {
 
             // Mark as completed button
             if (!event.isCompleted)
-              ElevatedButton.icon(
-                onPressed: () => _markAsCompleted(context, true),
-                icon: const Icon(Icons.check_circle),
-                label: const Text('Mark as Completed'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  foregroundColor: Colors.white,
-                  minimumSize: const Size(double.infinity, 50),
+              CustomButton(
+                width: MediaQuery.of(context).size.width,
+                height: 50.h,
+                onPressed: () {
+                  _markAsCompleted(context, true);
+                },
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.check_circle,
+                      color: ColorName.white,
+                    ),
+                    const Gap(8),
+                    Text(
+                      'Mark as Completed',
+                      style: TextStyle(color: ColorName.white),
+                    ),
+                  ],
                 ),
               )
             else

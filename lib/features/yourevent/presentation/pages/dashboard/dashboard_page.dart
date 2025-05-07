@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+import 'package:only_to_do/core/widgets/custom_button.dart';
+import 'package:only_to_do/gen/colors.gen.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import '../../../../../core/data/models/daily_tracker_model.dart';
@@ -893,21 +895,22 @@ class _DashboardPageState extends State<DashboardPage>
                     ),
                   ),
                 ),
-                ElevatedButton.icon(
+                CustomButton(
                   onPressed: () {
                     // Manually enter steps
                     _showStepsInputDialog(context, tracker.steps);
                   },
-                  icon: const Icon(Icons.edit),
-                  label: const Text('Enter Steps'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.edit, color: ColorName.white),
+                      Text(
+                        'Enter Steps',
+                        style: TextStyle(color: ColorName.white),
+                      ),
+                    ],
                   ),
-                ),
+                )
               ],
             ),
           ],
@@ -1083,16 +1086,12 @@ class _DashboardPageState extends State<DashboardPage>
             onPressed: () => Navigator.pop(context),
             child: const Text('Cancel'),
           ),
-          ElevatedButton(
+          CustomButton(
             onPressed: () {
               Navigator.pop(context);
               context.read<DashboardCubit>().updateSteps(steps);
             },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green,
-              foregroundColor: Colors.white,
-            ),
-            child: const Text('Save'),
+            buttonText: 'Save',
           ),
         ],
         shape: RoundedRectangleBorder(

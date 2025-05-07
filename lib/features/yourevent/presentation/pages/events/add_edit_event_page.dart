@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+import 'package:only_to_do/core/widgets/custom_button.dart';
+import 'package:only_to_do/gen/colors.gen.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../../core/data/models/event_model.dart';
@@ -486,18 +488,24 @@ class _AddEditEventPageState extends State<AddEditEventPage> {
               ),
             ),
             const Gap(32),
-            ElevatedButton(
-              onPressed: _isLoading ? null : _saveEvent,
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-              ),
+            CustomButton(
+              onPressed: () {
+                if (!_isLoading) {
+                  _saveEvent();
+                }
+              },
               child: _isLoading
-                  ? const CircularProgressIndicator()
+                  ? const CircularProgressIndicator(
+                      color: ColorName.white,
+                    )
                   : Text(
                       isEditing ? 'Update Event' : 'Create Event',
-                      style: const TextStyle(fontSize: 16),
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: ColorName.white,
+                      ),
                     ),
-            ),
+            )
           ],
         ),
       ),
