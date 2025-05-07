@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+
 import '../../../../../core/data/models/event_model.dart';
 import '../../cubits/events/events_cubit.dart';
 import '../../cubits/events/events_state.dart';
@@ -369,7 +371,7 @@ class _MonthlyViewPageState extends State<MonthlyViewPage> {
             DateFormat('h:mm a').format(event.eventDate),
             style: TextStyle(fontSize: 14, color: Colors.grey[600]),
           ),
-          const SizedBox(width: 8),
+          const Gap(8),
           Container(
             width: 12,
             height: 12,

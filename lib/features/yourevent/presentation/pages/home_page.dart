@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:only_to_do/features/yourevent/services/firebase_service.dart';
 import 'package:only_to_do/gen/colors.gen.dart';
@@ -190,7 +191,7 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.white,
                   size: 50,
                 ),
-                const SizedBox(height: 12),
+                const Gap(12),
                 Text(
                   _isOriginalLayout ? 'Event Countdown' : 'Task Manager',
                   style: const TextStyle(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import '../../../../../core/data/models/daily_tracker_model.dart';
 
 class HabitTrackerChart extends StatelessWidget {
@@ -90,7 +91,7 @@ class HabitTrackerChart extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const Gap(16),
           Expanded(
             child: trackers.isEmpty
                 ? Center(
@@ -157,7 +158,7 @@ class HabitTrackerChart extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(width: 8),
+                      const Gap(8),
                       // Habit grid
                       Expanded(
                         child: GridView.builder(

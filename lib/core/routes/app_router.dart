@@ -10,6 +10,7 @@ import '../../features/auth/presentation/pages/signup_page.dart';
 import '../../features/edit_task/presentation/views/edit_task_view.dart';
 import '../../features/on_boarding/on_boarding_view.dart';
 import '../../features/on_boarding/widgets/welcome_screen.dart';
+import '../../features/profile/presentation/pages/profile_screen.dart';
 import '../../features/sleep_tracking/collect_informations/presentation/informations_view.dart';
 import '../../features/sleep_tracking/collect_informations/presentation/sleep_prediction_result_page.dart';
 import '../../features/sleep_tracking/collect_informations/presentation/user_health_form.dart';
@@ -217,6 +218,19 @@ class AppRouter {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             child: SleepScreen(),
+            transitionDuration: Duration(milliseconds: 500),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(opacity: animation, child: child);
+            },
+          );
+        },
+      ),
+      GoRoute(
+        path: ProfileScreen.id,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: ProfileScreen(),
             transitionDuration: Duration(milliseconds: 500),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {

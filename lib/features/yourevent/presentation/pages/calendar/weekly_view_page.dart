@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import '../../../../../core/data/models/event_model.dart';
 import '../../cubits/events/events_cubit.dart';
@@ -188,7 +189,7 @@ class _WeeklyViewPageState extends State<WeeklyViewPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 8),
+              const Gap(8),
               Container(
                 width: 36,
                 height: 36,
@@ -312,7 +313,7 @@ class _WeeklyViewPageState extends State<WeeklyViewPage> {
                     shape: BoxShape.circle,
                   ),
                 ),
-                const SizedBox(width: 16),
+                const Gap(16),
                 // Task content
                 Expanded(
                   child: Column(

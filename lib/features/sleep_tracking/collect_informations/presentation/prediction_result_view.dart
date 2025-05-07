@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:only_to_do/gen/colors.gen.dart';
 
 import '../../../../core/widgets/custom_button.dart';
+import '../../sleep_home_page/presentation/views/sleep_page.dart';
 
 class PredictionResultView extends StatefulWidget {
   const PredictionResultView({super.key, required this.predictionValue});
@@ -52,12 +54,12 @@ class _PredictionResultViewState extends State<PredictionResultView>
               'Your Results are here 🎉',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 16),
+            const Gap(16),
             const Text(
               'Your predicted sleep quality is:',
               style: TextStyle(fontSize: 18),
             ),
-            const SizedBox(height: 24),
+            const Gap(24),
             AnimatedBuilder(
               builder: (context, child) {
                 return SizedBox(
@@ -121,7 +123,7 @@ class _PredictionResultViewState extends State<PredictionResultView>
             Gap(150.h),
             CustomButton(
               onPressed: () {
-                
+                context.pushReplacement(SleepScreen.id);
               },
               buttonText: 'Let’s Go !!',
             ),

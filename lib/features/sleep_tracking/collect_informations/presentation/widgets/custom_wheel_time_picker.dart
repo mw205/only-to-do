@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:wheel_picker/wheel_picker.dart';
 
 import '../../../../../gen/colors.gen.dart';
@@ -98,7 +99,7 @@ class _CustomWheelTimePickerState extends State<CustomWheelTimePicker> {
               child: Row(
                 children: [
                   ...timeWheels,
-                  const SizedBox(width: 6.0),
+                  const Gap(6.0),
                   amPmWheel,
                 ],
               ),

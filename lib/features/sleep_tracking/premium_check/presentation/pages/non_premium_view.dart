@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:only_to_do/core/widgets/custom_button.dart';
 
 import 'in_app_purchase_screen.dart';
 
@@ -21,13 +23,13 @@ class NonPremiumView extends StatelessWidget {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 16),
+            const Gap(16),
             const Text(
               'Get access to advanced sleep tracking and personalized insights for just \$5!',
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 32),
-            ElevatedButton(
+            const Gap(32),
+            CustomButton(
               onPressed: () {
                 showModalBottomSheet<void>(
                   context: context,
@@ -41,8 +43,8 @@ class NonPremiumView extends StatelessWidget {
                   },
                 );
               },
-              child: const Text('Upgrade for \$5'),
-            ),
+              buttonText: 'Upgrade for \$5',
+            )
           ],
         ),
       ),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+import 'package:only_to_do/core/widgets/custom_button.dart';
+import 'package:only_to_do/gen/colors.gen.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import '../../../../../core/data/models/daily_tracker_model.dart';
@@ -93,7 +96,7 @@ class _DashboardPageState extends State<DashboardPage>
                     _buildSummaryCards(context, state),
                     _buildTabBar(),
                     _buildChartSection(context, state),
-                    const SizedBox(height: 16),
+                    const Gap(16),
                     if (state.todayTracker != null)
                       _buildDailyTrackingSection(context, state),
                   ],
@@ -144,7 +147,7 @@ class _DashboardPageState extends State<DashboardPage>
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const Gap(8),
                 Text(
                   'Welcome to your Dashboard',
                   style: TextStyle(
@@ -263,7 +266,7 @@ class _DashboardPageState extends State<DashboardPage>
             Row(
               children: [
                 Icon(icon, color: Colors.white, size: 20),
-                const SizedBox(width: 8),
+                const Gap(8),
                 Expanded(
                   child: Text(
                     title,
@@ -286,7 +289,7 @@ class _DashboardPageState extends State<DashboardPage>
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 8),
+            const Gap(8),
             LinearProgressIndicator(
               value: progress.clamp(0.0, 1.0),
               backgroundColor: Colors.white.withValues(alpha: .3),
@@ -425,7 +428,7 @@ class _DashboardPageState extends State<DashboardPage>
                 color: Theme.of(context).colorScheme.primary,
               ),
             ),
-            const SizedBox(height: 16),
+            const Gap(16),
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -485,7 +488,7 @@ class _DashboardPageState extends State<DashboardPage>
           circularStrokeCap: CircularStrokeCap.round,
           animation: true,
         ),
-        const SizedBox(height: 8),
+        const Gap(8),
         Text(
           name,
           style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
@@ -567,19 +570,19 @@ class _DashboardPageState extends State<DashboardPage>
 
           // Tracking cards
           _buildSleepTracker(tracker),
-          const SizedBox(height: 16),
+          const Gap(16),
           _buildWaterIntakeTracker(tracker),
-          const SizedBox(height: 16),
+          const Gap(16),
           _buildDietTracker(tracker),
-          const SizedBox(height: 16),
+          const Gap(16),
           _buildStepsTracker(tracker),
-          const SizedBox(height: 16),
+          const Gap(16),
           _buildTasksSection(tracker),
-          const SizedBox(height: 16),
+          const Gap(16),
           _buildQuickGoalsCard(context),
-          const SizedBox(height: 16),
+          const Gap(16),
           _buildHealthTipsCard(context),
-          const SizedBox(height: 32),
+          const Gap(32),
         ],
       ),
     );
@@ -608,7 +611,7 @@ class _DashboardPageState extends State<DashboardPage>
                       ),
                       child: Icon(Icons.bedtime, color: Colors.indigo[900]),
                     ),
-                    const SizedBox(width: 12),
+                    const Gap(12),
                     const Text(
                       'Sleep',
                       style: TextStyle(
@@ -637,7 +640,7 @@ class _DashboardPageState extends State<DashboardPage>
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const Gap(16),
             Slider(
               value: tracker.sleepHours.toDouble(),
               min: 0,
@@ -695,7 +698,7 @@ class _DashboardPageState extends State<DashboardPage>
                       ),
                       child: Icon(Icons.water_drop, color: Colors.blue[900]),
                     ),
-                    const SizedBox(width: 12),
+                    const Gap(12),
                     const Text(
                       'Water Intake',
                       style: TextStyle(
@@ -724,7 +727,7 @@ class _DashboardPageState extends State<DashboardPage>
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const Gap(16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(
@@ -783,7 +786,7 @@ class _DashboardPageState extends State<DashboardPage>
                   ),
                   child: Icon(Icons.restaurant, color: Colors.orange[900]),
                 ),
-                const SizedBox(width: 12),
+                const Gap(12),
                 const Text(
                   'Diet Tracking',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -833,7 +836,7 @@ class _DashboardPageState extends State<DashboardPage>
                         color: Colors.green[900],
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    const Gap(12),
                     const Text(
                       'Steps',
                       style: TextStyle(
@@ -862,7 +865,7 @@ class _DashboardPageState extends State<DashboardPage>
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const Gap(16),
             LinearProgressIndicator(
               value: percentage,
               backgroundColor: Colors.grey[200],
@@ -870,7 +873,7 @@ class _DashboardPageState extends State<DashboardPage>
               minHeight: 12,
               borderRadius: BorderRadius.circular(6),
             ),
-            const SizedBox(height: 16),
+            const Gap(16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -892,21 +895,22 @@ class _DashboardPageState extends State<DashboardPage>
                     ),
                   ),
                 ),
-                ElevatedButton.icon(
+                CustomButton(
                   onPressed: () {
                     // Manually enter steps
                     _showStepsInputDialog(context, tracker.steps);
                   },
-                  icon: const Icon(Icons.edit),
-                  label: const Text('Enter Steps'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.edit, color: ColorName.white),
+                      Text(
+                        'Enter Steps',
+                        style: TextStyle(color: ColorName.white),
+                      ),
+                    ],
                   ),
-                ),
+                )
               ],
             ),
           ],
@@ -935,14 +939,14 @@ class _DashboardPageState extends State<DashboardPage>
                   ),
                   child: Icon(Icons.task_alt, color: Colors.teal[900]),
                 ),
-                const SizedBox(width: 12),
+                const Gap(12),
                 const Text(
                   'Daily Tasks',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const Gap(16),
             TextField(
               controller: _taskController,
               decoration: InputDecoration(
@@ -976,7 +980,7 @@ class _DashboardPageState extends State<DashboardPage>
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            const Gap(16),
             if (tracker.completedTasks.isNotEmpty)
               ...tracker.completedTasks.map(
                 (task) => _buildTaskItem(context, task),
@@ -992,7 +996,7 @@ class _DashboardPageState extends State<DashboardPage>
                       size: 40,
                       color: Colors.grey[400],
                     ),
-                    const SizedBox(height: 8),
+                    const Gap(8),
                     Text(
                       'No tasks added yet',
                       style: TextStyle(
@@ -1029,7 +1033,7 @@ class _DashboardPageState extends State<DashboardPage>
             ),
             child: const Icon(Icons.check, color: Colors.white, size: 14),
           ),
-          const SizedBox(width: 12),
+          const Gap(12),
           Expanded(child: Text(task, style: const TextStyle(fontSize: 15))),
           IconButton(
             icon: Icon(Icons.delete_outline, size: 20, color: Colors.red[700]),
@@ -1066,7 +1070,7 @@ class _DashboardPageState extends State<DashboardPage>
                 steps = int.tryParse(value) ?? currentSteps;
               },
             ),
-            const SizedBox(height: 8),
+            const Gap(8),
             Text(
               'Recommended goal: 10,000 steps daily',
               style: TextStyle(
@@ -1082,16 +1086,12 @@ class _DashboardPageState extends State<DashboardPage>
             onPressed: () => Navigator.pop(context),
             child: const Text('Cancel'),
           ),
-          ElevatedButton(
+          CustomButton(
             onPressed: () {
               Navigator.pop(context);
               context.read<DashboardCubit>().updateSteps(steps);
             },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green,
-              foregroundColor: Colors.white,
-            ),
-            child: const Text('Save'),
+            buttonText: 'Save',
           ),
         ],
         shape: RoundedRectangleBorder(
@@ -1153,7 +1153,7 @@ class _DashboardPageState extends State<DashboardPage>
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 16),
+          const Gap(16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -1193,7 +1193,7 @@ class _DashboardPageState extends State<DashboardPage>
             Icon(icon, color: Colors.white, size: 24),
           ],
         ),
-        const SizedBox(height: 8),
+        const Gap(8),
         Text(
           value,
           style: const TextStyle(
@@ -1246,7 +1246,7 @@ class _DashboardPageState extends State<DashboardPage>
             ),
             child: Icon(Icons.lightbulb, color: Colors.blue.shade800),
           ),
-          const SizedBox(width: 16),
+          const Gap(16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -1258,7 +1258,7 @@ class _DashboardPageState extends State<DashboardPage>
                     color: Colors.blue.shade800,
                   ),
                 ),
-                const SizedBox(height: 4),
+                const Gap(4),
                 Text(randomTip),
               ],
             ),

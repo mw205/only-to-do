@@ -3,8 +3,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+import 'package:only_to_do/core/widgets/custom_button.dart';
+import 'package:only_to_do/gen/colors.gen.dart';
 import 'package:share_plus/share_plus.dart';
+
 import '../../../../../core/data/models/event_model.dart';
 import '../../cubits/events/events_cubit.dart';
 import '../../widgets/countdown_timer.dart';
@@ -63,7 +68,7 @@ class EventDetailsPage extends StatelessWidget {
                     size: 40,
                   ),
                 ),
-                const SizedBox(width: 16),
+                const Gap(16),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,7 +80,7 @@ class EventDetailsPage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 4),
+                      const Gap(4),
                       Row(
                         children: [
                           Text(
@@ -88,7 +93,7 @@ class EventDetailsPage extends StatelessWidget {
                             ),
                           ),
                           if (event.isCompleted) ...[
-                            const SizedBox(width: 8),
+                            const Gap(8),
                             Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 8,
@@ -108,7 +113,7 @@ class EventDetailsPage extends StatelessWidget {
                               ),
                             ),
                           ] else if (isExpired) ...[
-                            const SizedBox(width: 8),
+                            const Gap(8),
                             Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 8,
@@ -136,7 +141,7 @@ class EventDetailsPage extends StatelessWidget {
               ],
             ),
 
-            const SizedBox(height: 24),
+            const Gap(24),
 
             // Countdown timer (if not completed and not expired)
             if (!isExpired && !event.isCompleted) ...[
@@ -156,7 +161,7 @@ class EventDetailsPage extends StatelessWidget {
                         color: eventColor,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const Gap(16),
                     CountdownTimer(
                       targetDate: event.eventDate,
                       backgroundColor: Colors.transparent,
@@ -174,7 +179,7 @@ class EventDetailsPage extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
+              const Gap(24),
             ],
 
             // Description section
@@ -182,7 +187,7 @@ class EventDetailsPage extends StatelessWidget {
               'Description',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
+            const Gap(8),
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
@@ -206,14 +211,14 @@ class EventDetailsPage extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 24),
+            const Gap(24),
 
             // Reminders section
             const Text(
               'Reminders',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
+            const Gap(8),
             if (event.reminderTimes.isEmpty)
               Container(
                 width: double.infinity,
@@ -257,7 +262,7 @@ class EventDetailsPage extends StatelessWidget {
                           color: isPast ? Colors.grey : eventColor,
                           size: 20,
                         ),
-                        const SizedBox(width: 12),
+                        const Gap(12),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -271,7 +276,7 @@ class EventDetailsPage extends StatelessWidget {
                                   color: isPast ? Colors.grey : Colors.black87,
                                 ),
                               ),
-                              const SizedBox(height: 4),
+                              const Gap(4),
                               Text(
                                 _formatReminderTime(
                                   event.eventDate,
@@ -309,18 +314,28 @@ class EventDetailsPage extends StatelessWidget {
                 }).toList(),
               ),
 
-            const SizedBox(height: 32),
+            const Gap(32),
 
             // Mark as completed button
             if (!event.isCompleted)
-              ElevatedButton.icon(
-                onPressed: () => _markAsCompleted(context, true),
-                icon: const Icon(Icons.check_circle),
-                label: const Text('Mark as Completed'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  foregroundColor: Colors.white,
-                  minimumSize: const Size(double.infinity, 50),
+              CustomButton(
+                width: MediaQuery.of(context).size.width,
+                height: 50.h,
+                onPressed: () {
+                  _markAsCompleted(context, true);
+                },
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.check_circle,
+                      color: ColorName.white,
+                    ),
+                    const Gap(8),
+                    Text(
+                      'Mark as Completed',
+                      style: TextStyle(color: ColorName.white),
+                    ),
+                  ],
                 ),
               )
             else

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
@@ -262,7 +263,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
                             shape: BoxShape.circle,
                           ),
                         ),
-                        const SizedBox(width: 8),
+                        const Gap(8),
                         Text(value),
                       ],
                     ),
@@ -344,7 +345,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
                     ),
                   ),
 
-                  const SizedBox(height: 16),
+                  const Gap(16),
                 ],
               ),
           ],

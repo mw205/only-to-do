@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class EmptyState extends StatelessWidget {
   final String title;
@@ -25,20 +26,20 @@ class EmptyState extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon, size: 80, color: iconColor ?? Colors.grey[400]),
-            const SizedBox(height: 24),
+            const Gap(24),
             Text(
               title,
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 16),
+            const Gap(16),
             Text(
               message,
               style: TextStyle(fontSize: 16, color: Colors.grey[600]),
               textAlign: TextAlign.center,
             ),
             if (actionButton != null) ...[
-              const SizedBox(height: 32),
+              const Gap(32),
               actionButton!,
             ],
           ],

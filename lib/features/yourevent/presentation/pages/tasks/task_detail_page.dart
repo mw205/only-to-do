@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import '../../../../../core/data/models/event_model.dart';
 import '../../cubits/events/events_cubit.dart';
@@ -89,7 +90,7 @@ class TaskDetailPage extends StatelessWidget {
               DateFormat('EEEE, MMM dd, yyyy').format(task.eventDate),
             ),
 
-            const SizedBox(height: 16),
+            const Gap(16),
 
             _buildInfoRow(
               context,
@@ -97,7 +98,7 @@ class TaskDetailPage extends StatelessWidget {
               DateFormat('h:mm a').format(task.eventDate),
             ),
 
-            const SizedBox(height: 16),
+            const Gap(16),
 
             _buildInfoRow(
               context,
@@ -112,7 +113,7 @@ class TaskDetailPage extends StatelessWidget {
                 'Description',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 12),
+              const Gap(12),
               Text(task.description, style: const TextStyle(fontSize: 16)),
             ],
 
@@ -124,7 +125,7 @@ class TaskDetailPage extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
 
-            const SizedBox(height: 12),
+            const Gap(12),
 
             _buildActivityItem(
               'Created',
@@ -154,7 +155,7 @@ class TaskDetailPage extends StatelessWidget {
     return Row(
       children: [
         Icon(icon, color: color ?? Colors.grey[700]),
-        const SizedBox(width: 16),
+        const Gap(16),
         Text(
           text,
           style: TextStyle(fontSize: 16, color: color ?? Colors.black),
@@ -178,7 +179,7 @@ class TaskDetailPage extends StatelessWidget {
               color: Colors.grey[400],
             ),
           ),
-          const SizedBox(width: 16),
+          const Gap(16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,7 +188,7 @@ class TaskDetailPage extends StatelessWidget {
                   title,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(height: 4),
+                const Gap(4),
                 Text(description, style: TextStyle(color: Colors.grey[600])),
               ],
             ),

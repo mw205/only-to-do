@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class LoadingOverlay extends StatelessWidget {
   final Widget child;
@@ -34,7 +35,7 @@ class LoadingOverlay extends StatelessWidget {
                     ),
                   ),
                   if (message != null) ...[
-                    const SizedBox(height: 16),
+                    const Gap(16),
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 16,

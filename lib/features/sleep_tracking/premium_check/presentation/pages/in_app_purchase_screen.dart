@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:only_to_do/core/widgets/custom_button.dart';
 import 'package:only_to_do/features/yourevent/services/firebase_service.dart';
@@ -32,13 +33,13 @@ class InAppPurchaseBottomSheet extends StatelessWidget {
             Assets.animation.upgrade.lottie(
               height: 200,
             ),
-            const SizedBox(height: 32),
+            const Gap(32),
             const Text(
               'Get access to advanced sleep tracking and personalized insights for just \$5!',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 18),
             ),
-            const SizedBox(height: 32),
+            const Gap(32),
             CustomButton(
               onPressed: () async {
                 await _simulatePurchase();

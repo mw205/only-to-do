@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:only_to_do/features/sleep_tracking/collect_informations/data/models/question_model.dart';
 import 'package:only_to_do/features/sleep_tracking/collect_informations/presentation/widgets/question_step_widget.dart';
@@ -220,7 +221,7 @@ class _SleepQuestionsFlowState extends State<SleepQuestionsFlow> {
                                   ),
                                 )
                               else
-                                const SizedBox(width: 48),
+                                const Gap(48),
                               if (questionData.isForTimePicking ||
                                   index == questions.length - 1)
                                 AnimatedOpacity(
@@ -251,7 +252,7 @@ class _SleepQuestionsFlowState extends State<SleepQuestionsFlow> {
                                 )
                               else if (!questionData.isForTimePicking &&
                                   index < questions.length - 1)
-                                const SizedBox(width: 48),
+                                const Gap(48),
                             ],
                           ),
                         ),
