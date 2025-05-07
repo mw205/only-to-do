@@ -3,6 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:only_to_do/gen/colors.gen.dart';
 
 class AppTextStyles {
+  static TextStyle font18Black1Medium = TextStyle(
+    color: Colors.black,
+    fontSize: 18.sp,
+    fontWeight: FontWeight.w400, // Regular weight
+  );
   static TextStyle kPurple12W600 = TextStyle(
     fontSize: 12.sp,
     fontWeight: FontWeight.w600,
