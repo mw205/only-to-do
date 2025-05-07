@@ -4,10 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:only_to_do/core/data/datasources/local_datasource.dart';
-import 'package:only_to_do/core/network/dio_config.dart';
+import 'package:only_to_do/core/di/di.dart';
 import 'package:only_to_do/features/sleep_tracking/collect_informations/data/repository/sleep_tracking_repository.dart';
-import 'package:only_to_do/features/sleep_tracking/collect_informations/data/services/sleep_tracking_service.dart';
 import 'package:only_to_do/features/sleep_tracking/core/cubit/sleep_tracking_cubit.dart';
 import 'package:only_to_do/features/yourevent/services/storage_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,6 +26,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
 
+  initServiceLocators();
   await Firebase.initializeApp();
 
   // Initialize Hive for local storage (needed for Event Countdown app)
@@ -94,27 +93,24 @@ class _OnlyToDoState extends State<OnlyToDo> {
       providers: [
         BlocProvider(
           create: (context) =>
-              AuthCubit(authRepository: AuthRepository())..checkAuth(),
+              AuthCubit(authRepository: serviceLocator.get<AuthRepository>())
+                ..checkAuth(),
         ),
         BlocProvider(
-          create: (context) => EventsCubit(eventRepository: EventRepository()),
+          create: (context) => EventsCubit(
+              eventRepository: serviceLocator.get<EventRepository>()),
         ),
         BlocProvider(
           create: (context) => SleepTrackingCubit(
-            SleepTrackingRepository(
-              service: SleepTrackingService(
-                localDataSource: LocalDataSource(),
-                dio: DioConfig.instance.getDio(),
-              ),
-            ),
+            serviceLocator.get<SleepTrackingRepository>(),
           ),
         ),
         if (_isOriginalLayout) ...[
           BlocProvider(create: (context) => PomodoroCubit()),
           BlocProvider(
             create: (context) => DashboardCubit(
-              dashboardRepository: DashboardRepository(),
-              eventRepository: EventRepository(),
+              dashboardRepository: serviceLocator.get<DashboardRepository>(),
+              eventRepository: serviceLocator.get<EventRepository>(),
             ),
           ),
         ],
