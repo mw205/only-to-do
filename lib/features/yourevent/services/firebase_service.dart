@@ -65,9 +65,9 @@ class FirebaseService {
   /// Checks if the current user is a premium user.
   ///
   /// Returns [true] if the user is a premium user, [false] otherwise.
-  Future<bool> isPremuimUser() async {
+  Future<bool> isPremiumUser() async {
     final docSnapshot =
         await _firestore.collection('users').doc(currentUserId).get();
-    return docSnapshot['premiumUser'] ?? false;
+    return docSnapshot['isPremium'] ?? false;
   }
 }

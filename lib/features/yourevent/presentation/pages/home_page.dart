@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:only_to_do/features/yourevent/services/storage_service.dart';
+import 'package:only_to_do/features/yourevent/services/firebase_service.dart';
+import 'package:only_to_do/gen/colors.gen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../gen/assets.gen.dart';
@@ -13,7 +14,7 @@ import '../../../auth/presentation/pages/login_page.dart';
 import '../../../pomodoro/presentation/views/pomodoro_page.dart';
 import '../../../sleep_tracking/collect_informations/presentation/informations_view.dart';
 // New pages
-import '../../../sleep_tracking/premium_check/premuim_check_page.dart';
+import '../../../sleep_tracking/premium_check/presentation/pages/premuim_check_page.dart';
 import 'calendar/monthly_view_page.dart';
 import 'calendar/weekly_view_page.dart';
 import 'dashboard/dashboard_page.dart';
@@ -32,6 +33,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool isPremiumUser = false;
   int _selectedIndex = 0;
   bool _isOriginalLayout = true; // Controls which layout to show
 
@@ -54,6 +56,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _loadLayoutPreference();
+    checkIfPremiumUser();
   }
 
   Future<void> _loadLayoutPreference() async {
@@ -67,6 +70,10 @@ class _HomePageState extends State<HomePage> {
   Future<void> _saveLayoutPreference(bool isOriginal) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('is_original_layout', isOriginal);
+  }
+
+  Future<void> checkIfPremiumUser() async {
+    isPremiumUser = await FirebaseService().isPremiumUser();
   }
 
   @override
@@ -324,6 +331,9 @@ class _HomePageState extends State<HomePage> {
             height: 24.h,
           ),
           icon: Badge(
+            isLabelVisible: !isPremiumUser,
+            backgroundColor: ColorName.yellow,
+            label: Icon(Icons.workspace_premium_outlined),
             child: Assets.images.sleepScore.svg(
               height: 24.h,
               colorFilter: ColorFilter.mode(
@@ -367,7 +377,7 @@ class _HomePageState extends State<HomePage> {
       // Navigate to sleep questions flow
       context.push(
         PremiumCheckScreen.id,
-        extra: await StorageService().checkIfUserIsPremuim(),
+        extra: isPremiumUser,
       );
 
       return;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:only_to_do/features/sleep_tracking/collect_informations/data/option_model.dart';
+import 'package:only_to_do/features/sleep_tracking/collect_informations/data/models/option_model.dart';
 
 class QuestionModel {
   final String question;

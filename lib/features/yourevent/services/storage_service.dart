@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:only_to_do/features/sleep_tracking/collect_informations/data/models/predict_sleep_quality_request_body.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../domain/entities/pomodoro_settings.dart';
@@ -17,7 +18,7 @@ class StorageService {
   static const String _userBoxName = 'user_box';
   static const String _settingsBoxName = 'settings_box';
   static const String _trackerBoxName = 'tracker_box';
-
+  static const String _sleepBoxName = 'sleep_box';
   // SecureStorage instance
   late FlutterSecureStorage _securePrefs;
   late SharedPreferences _prefs;
@@ -26,19 +27,21 @@ class StorageService {
   late Box _userBox;
   late Box _settingsBox;
   late Box _trackerBox;
+  late Box<PredictSleepQualityRequestBody> _sleepBox;
 
   // Initialize storage
   Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
     // Initialize Hive
     await Hive.initFlutter();
-
+    Hive.registerAdapter<PredictSleepQualityRequestBody>(
+        PredictSleepQualityRequestBodyAdapter());
     // Open Hive boxes
     _eventsBox = await Hive.openBox(_eventsBoxName);
     _userBox = await Hive.openBox(_userBoxName);
     _settingsBox = await Hive.openBox(_settingsBoxName);
     _trackerBox = await Hive.openBox(_trackerBoxName);
-
+    _sleepBox = await Hive.openBox(_sleepBoxName);
     // Initialize SharedPreferences
     _securePrefs = FlutterSecureStorage();
   }
@@ -81,7 +84,7 @@ class StorageService {
         await _securePrefs.read(key: 'user_name');
   }
 
-  Future<bool?> checkIfUserIsPremuim() async {
+  Future<bool?> checkIfUserisPremium() async {
     return _userBox.get('isUserPremuim') as bool? ??
         bool.parse(await _securePrefs.read(key: 'isUserPremuim') ?? "false");
   }
@@ -365,5 +368,39 @@ class StorageService {
   Future<bool> isUserLoggedIn() async {
     final userId = await getUserId();
     return userId != null && userId.isNotEmpty;
+  }
+
+  Future<void> saveSleepData(
+      PredictSleepQualityRequestBody sleepData, double predictionValue) async {
+    await _userBox.put("prediction_value", predictionValue);
+    await _sleepBox.put('sleep_data', sleepData);
+  }
+
+  PredictSleepQualityRequestBody? getSleepData() {
+    return _sleepBox.get('sleep_data');
+  }
+
+  double? getPredictionValue() {
+    return _userBox.get("prediction_value");
+  }
+
+  Future<void> clearSleepData() async {
+    await _sleepBox.clear();
+    await _userBox.delete("prediction_value");
+  }
+
+  //updateSleepData
+  Future<void> updateSleepData(PredictSleepQualityRequestBody sleepData) async {
+    _sleepBox.delete('sleep_data');
+
+    await _sleepBox.put('sleep_data', sleepData);
+  }
+
+  Future<void> updatePredictionValue(double predictionValue) async {
+    await _userBox.put("prediction_value", predictionValue);
+  }
+
+  Future<bool> sleepDataExists() async {
+    return _sleepBox.containsKey('sleep_data');
   }
 }
