@@ -22,6 +22,7 @@ class AppRouter {
   AppRouter._();
 
   static final router = GoRouter(
+    initialLocation: SleepScreen.id,
     routes: [
       GoRoute(
         path: SplashView.id,
