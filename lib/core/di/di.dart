@@ -18,8 +18,6 @@ void initServiceLocators() {
   serviceLocator.registerLazySingleton<AuthRepository>(() => AuthRepository());
   serviceLocator
       .registerLazySingleton<DashboardRepository>(() => DashboardRepository());
-  serviceLocator
-      .registerLazySingleton<EventRepository>(() => EventRepository());
 
   serviceLocator.registerLazySingleton<LocalDataSource>(
       () => LocalDataSource(serviceLocator.get<StorageService>()));
